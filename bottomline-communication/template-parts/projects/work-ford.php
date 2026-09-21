@@ -1,0 +1,8 @@
+<?php defined( 'ABSPATH' ) || exit; ?>
+<aside class="project-panel" id="project-ford" aria-hidden="true" role="dialog" aria-modal="true" aria-label="<?php echo esc_attr( bl_value('bl_project_ford_001', 'Ford · New Everest', 'option') ); ?>" tabindex="-1">
+<button class="panel-close" aria-label="<?php echo esc_attr( bl_value('bl_project_ford_002', 'Close', 'option') ); ?>"><svg viewBox="0 0 24 24"><path d="M6 6 L18 18 M18 6 L6 18"/></svg></button>
+<div class="panel-cover" style="background-image:url('<?php echo esc_url( bl_url( bl_value('bl_project_ford_003', 'projects/ford-1.jpg', 'option') ) ); ?>')"><span class="panel-cover-cat">Event · Product Launch</span></div>
+<div class="panel-body"><h2 class="panel-title">Ford · New Everest</h2><div class="panel-meta"><span>2024</span><span>Automotive</span></div><p class="panel-desc">Product launch event for the New Ford Everest at Naghi Motors — venue branding, hospitality, customer test-drive experience and supporting comms.</p>
+<div class="panel-scope"><h4>Scope of work</h4><ul><li>Event concept</li><li>Venue branding</li><li>Hospitality</li><li>Test-drive experience</li><li>Photography</li></ul></div>
+<div class="panel-gallery"><h4>Gallery</h4><div class="panel-gallery-grid"><img src="<?php echo esc_url( bl_url( bl_value('bl_project_ford_003', 'projects/ford-1.jpg', 'option') ) ); ?>" alt="<?php echo esc_attr( bl_value('bl_project_ford_001', 'Ford · New Everest', 'option') ); ?>" loading="lazy" /></div></div>
+<div class="panel-footer"><p>Working on something similar?</p><a href="<?php echo esc_url( bl_url( bl_value('bl_project_ford_004', 'contact.html', 'option') ) ); ?>" class="btn btn-primary">Start a project →</a></div></div></aside>

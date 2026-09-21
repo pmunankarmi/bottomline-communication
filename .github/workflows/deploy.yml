@@ -1,0 +1,46 @@
+name: Validate and deploy WordPress theme
+on:
+  push:
+    branches: [main]
+  pull_request:
+permissions:
+  contents: read
+concurrency:
+  group: bottomline-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate theme
+        run: |
+          find bottomline-communication -name '*.php' -print0 | xargs -0 -n1 php -l
+          for file in bottomline-communication/assets/js/*.js; do node --check "$file"; done
+          python3 tests/check-theme.py
+  deploy:
+    if: github.event_name == 'push' && vars.WP_DEPLOY_ENABLED == 'true'
+    needs: validate
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - uses: actions/checkout@v4
+      - name: Configure deployment SSH
+        env:
+          SSH_KEY: ${{ secrets.WP_SSH_PRIVATE_KEY }}
+          KNOWN_HOSTS: ${{ secrets.WP_SSH_KNOWN_HOSTS }}
+        run: |
+          test -n "$SSH_KEY" && test -n "$KNOWN_HOSTS"
+          install -d -m 700 ~/.ssh
+          printf '%s\n' "$SSH_KEY" > ~/.ssh/id_ed25519
+          printf '%s\n' "$KNOWN_HOSTS" > ~/.ssh/known_hosts
+          chmod 600 ~/.ssh/id_ed25519 ~/.ssh/known_hosts
+      - name: Deploy directly to the installed theme
+        env:
+          WP_SSH_HOST: ${{ secrets.WP_SSH_HOST }}
+          WP_SSH_USER: ${{ secrets.WP_SSH_USER }}
+          WP_SSH_PORT: ${{ secrets.WP_SSH_PORT }}
+          WP_PATH: ${{ secrets.WP_PATH }}
+          WP_THEME_PATH: ${{ secrets.WP_THEME_PATH }}
+          WP_CACHE_HOOK: ${{ secrets.WP_CACHE_HOOK }}
+        run: bash deploy/push-theme.sh

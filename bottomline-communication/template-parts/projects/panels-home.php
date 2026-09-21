@@ -1,0 +1,9 @@
+<?php get_template_part( 'template-parts/projects/home-sab' ); ?>
+<?php get_template_part( 'template-parts/projects/home-go' ); ?>
+<?php get_template_part( 'template-parts/projects/home-sme' ); ?>
+<?php get_template_part( 'template-parts/projects/home-boston' ); ?>
+<?php get_template_part( 'template-parts/projects/home-sarcc' ); ?>
+<?php get_template_part( 'template-parts/projects/home-ufc' ); ?>
+<?php get_template_part( 'template-parts/projects/home-cr7' ); ?>
+<?php get_template_part( 'template-parts/projects/home-centrepoint' ); ?>
+<?php get_template_part( 'template-parts/projects/home-mbsc' ); ?>

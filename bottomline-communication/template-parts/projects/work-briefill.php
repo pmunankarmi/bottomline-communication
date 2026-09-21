@@ -1,0 +1,8 @@
+<?php defined( 'ABSPATH' ) || exit; ?>
+<aside class="project-panel" id="project-briefill" aria-hidden="true" role="dialog" aria-modal="true" aria-label="<?php echo esc_attr( bl_value('bl_project_briefill_001', 'Briefill', 'option') ); ?>" tabindex="-1">
+<button class="panel-close" aria-label="<?php echo esc_attr( bl_value('bl_project_briefill_002', 'Close', 'option') ); ?>"><svg viewBox="0 0 24 24"><path d="M6 6 L18 18 M18 6 L6 18"/></svg></button>
+<div class="panel-cover" style="background-image:url('<?php echo esc_url( bl_url( bl_value('bl_project_briefill_003', 'projects/briefill-1.jpg', 'option') ) ); ?>')"><span class="panel-cover-cat">Branding · Identity</span></div>
+<div class="panel-body"><h2 class="panel-title">Briefill</h2><div class="panel-meta"><span>2024</span><span>B2B</span></div><p class="panel-desc">Complete brand identity for Briefill — logo system, stationery, signage, brand book and content frameworks under the line "Crafting Excellence Together."</p>
+<div class="panel-scope"><h4>Scope of work</h4><ul><li>Brand naming review</li><li>Identity system</li><li>Stationery</li><li>Signage</li><li>Brand book</li></ul></div>
+<div class="panel-gallery"><h4>Gallery</h4><div class="panel-gallery-grid"><img src="<?php echo esc_url( bl_url( bl_value('bl_project_briefill_003', 'projects/briefill-1.jpg', 'option') ) ); ?>" alt="<?php echo esc_attr( bl_value('bl_project_briefill_001', 'Briefill', 'option') ); ?>" loading="lazy" /></div></div>
+<div class="panel-footer"><p>Working on something similar?</p><a href="<?php echo esc_url( bl_url( bl_value('bl_project_briefill_004', 'contact.html', 'option') ) ); ?>" class="btn btn-primary">Start a project →</a></div></div></aside>

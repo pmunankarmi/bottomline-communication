@@ -1,0 +1,17 @@
+/*
+Theme Name: BottomLine Communication
+Theme URI: https://github.com/pmunankarmi/bottomline-communication
+Author: BottomLine Communication
+Description: Faithful classic WordPress conversion of the supplied BottomLine HTML. PHP template parts and ACF Pro text fields.
+Version: 1.0.0
+Requires at least: 6.4
+Requires PHP: 7.4
+Text Domain: bottomline
+*/
+[hidden]{display:none!important}
+.admin-bar #nav{top:32px}
+.project-panel[aria-hidden="true"]{visibility:hidden}
+.project-panel.open{visibility:visible}
+.bl-form-error{padding:16px;margin-bottom:20px;border:1px solid #b32d2e;color:#b32d2e}
+@media(max-width:782px){.admin-bar #nav{top:46px}}
+@media(max-width:900px){#nav.mobile-open .nav-links{display:flex;position:absolute;top:100%;left:0;right:0;flex-direction:column;gap:18px;background:#210035;padding:24px;margin:0}}
