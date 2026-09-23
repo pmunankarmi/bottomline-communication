@@ -18,6 +18,27 @@ jobs:
           find bottomline-communication -name '*.php' -print0 | xargs -0 -n1 php -l
           for file in bottomline-communication/assets/js/*.js; do node --check "$file"; done
           python3 tests/check-theme.py
+  release:
+    if: github.event_name == 'push'
+    needs: validate
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Publish installable theme release when its version changes
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          version=$(sed -n 's/^Version: //p' bottomline-communication/style.css | tr -d '\r')
+          [[ "$version" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]
+          tag="v$version"
+          if gh release view "$tag" >/dev/null 2>&1; then
+            echo "Release $tag already exists; increment the theme version for a new release."
+            exit 0
+          fi
+          zip -qr bottomline-communication.zip bottomline-communication
+          gh release create "$tag" bottomline-communication.zip --target "$GITHUB_SHA" --title "BottomLine Communication $version" --notes "Installable WordPress theme. See the repository README for setup and update instructions."
   deploy:
     if: github.event_name == 'push' && vars.WP_DEPLOY_ENABLED == 'true'
     needs: validate

@@ -94,3 +94,13 @@ Integration tests require a disposable **local** WordPress installation. They ch
 For HTTP tests, install `tests/local-mail-interceptor.php` in the disposable site's `wp-content/mu-plugins` directory. It intercepts all mail; never deploy it to production. Tests create local test submissions and a subscriber account. Wait at least one minute between complete HTTP runs for the form rate limit to expire.
 
 The local test environment uses the shared ACF API; the licensed ACF Pro gallery/options UI and actual production mail delivery still need verification on the target WordPress installation.
+
+## WordPress update notices
+
+Version 2.0.1 adds the native WordPress update integration for this public GitHub repository. Upload this version once through Appearance → Themes → Add New → Upload Theme, then replace the installed theme. Older copies cannot discover this updater by themselves. Keep the installed directory named `bottomline-communication`.
+
+After a push to main passes validation, GitHub publishes an installable release ZIP if the `Version` in `style.css` is new. Increment that three-part version for each release; existing releases are immutable. WordPress checks the latest stable release through its standard update system. Dashboard → Updates → Check again can request a fresh check. A newer version appears under Appearance → Themes and Dashboard → Updates; the installed latest version correctly shows no update. The active theme (or its child theme) must load this integration.
+
+WordPress update checks and optional native automatic updates are scheduled, not instant. For unattended updates, enable auto-updates for this theme in WordPress, or configure the separate push deployment above. This release does not silently change the site's auto-update preference. GitHub API access must be available from the host. All page content remains in PHP/WordPress; the GitHub API supplies update metadata only.
+
+Updater integration test: `BL_WP_PATH=/path/to/disposable/wordpress php tests/updates.php`.
