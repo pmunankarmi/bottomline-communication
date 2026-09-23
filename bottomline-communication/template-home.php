@@ -41,12 +41,12 @@ get_header();
     <!-- Animated orthogonal strokes inspired by the BottomLine wordmark. -->
     <div class="col-lg-4 hero-visual" aria-hidden="true">
       <svg class="hero-line-pattern" viewBox="0 0 400 360" fill="none" aria-hidden="true" focusable="false">
-        <g class="brand-line brand-line-h1"><path d="M40 170H370" /></g>
-        <g class="brand-line brand-line-h2"><path d="M95 80H310" /></g>
-        <g class="brand-line brand-line-h3"><path d="M70 275H325" /></g>
-        <g class="brand-line brand-line-v1"><path d="M175 30V325" /></g>
-        <g class="brand-line brand-line-v2"><path d="M145 135V300" /></g>
-        <g class="brand-line brand-line-v3"><path d="M290 60V250" /></g>
+        <g class="brand-line brand-line-h1"><path pathLength="1" d="M370 170H40" /></g>
+        <g class="brand-line brand-line-h2"><path pathLength="1" d="M95 80H310" /></g>
+        <g class="brand-line brand-line-h3"><path pathLength="1" d="M70 275H325" /></g>
+        <g class="brand-line brand-line-v1"><path pathLength="1" d="M175 30V325" /></g>
+        <g class="brand-line brand-line-v2"><path pathLength="1" d="M145 300V135" /></g>
+        <g class="brand-line brand-line-v3"><path pathLength="1" d="M290 250V60" /></g>
       </svg>
     </div>
    </div>

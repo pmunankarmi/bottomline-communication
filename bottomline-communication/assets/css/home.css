@@ -196,7 +196,7 @@
   /* One mask per line — guarantees exact line breaks */
   .hero h1 .line-mask{
     display:block;overflow:hidden;
-    padding:.04em 0 .12em 0;
+    padding:.04em 0 .2em 0;
     line-height:1.15;
   }
   .hero h1 .line-text{
@@ -208,6 +208,7 @@
   }
   @keyframes slideUpMask{to{transform:translateY(0)}}
   .hero h1 .accent{
+    padding-bottom:.18em;margin-bottom:-.18em;
     background:linear-gradient(120deg,var(--teal) 0%, var(--gold) 100%);
     -webkit-background-clip:text;background-clip:text;color:transparent;
   }
@@ -281,7 +282,23 @@
   @keyframes brandLineV1{0%,100%{transform:translateX(0) scaleY(1)}50%{transform:translateX(65px) scaleY(.8)}}
   @keyframes brandLineV2{0%,100%{transform:translateX(0) scaleY(.9)}50%{transform:translateX(-55px) scaleY(1.15)}}
   @keyframes brandLineV3{0%,100%{transform:translateX(0) scaleY(1)}50%{transform:translateX(-65px) scaleY(.75)}}
-  @media (prefers-reduced-motion:reduce){.brand-line{animation:none}}
+  /* Draw each stroke from its path's starting point, independently of its movement. */
+  .brand-line path{stroke-dasharray:1;stroke-dashoffset:1;animation:brandLineDraw 8s ease-in-out infinite}
+  .brand-line-h2 path{animation-delay:-1.3s}
+  .brand-line-h3 path{animation-delay:-2.6s}
+  .brand-line-v1 path{animation-delay:-4s}
+  .brand-line-v2 path{animation-delay:-5.3s}
+  .brand-line-v3 path{animation-delay:-6.6s}
+  @keyframes brandLineDraw{
+    0%{stroke-dashoffset:1;opacity:0}
+    5%{opacity:1}
+    65%,85%{stroke-dashoffset:0;opacity:1}
+    100%{stroke-dashoffset:0;opacity:0}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .brand-line,.brand-line path{animation:none}
+    .brand-line path{stroke-dashoffset:0;opacity:1}
+  }
 
   /* Hero stagger load (eyebrow, actions, stats) */
   .load{opacity:0;transform:translateY(20px)}
