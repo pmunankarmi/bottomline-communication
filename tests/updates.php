@@ -6,7 +6,7 @@ require $path . '/wp-load.php';
 if ( 'local' !== wp_get_environment_type() ) exit( 'Local test site required.' );
 function check_update( $ok, $message ) { if ( ! $ok ) throw new RuntimeException( $message ); echo "PASS: $message\n"; }
 $repo = 'https://github.com/pmunankarmi/bottomline-communication';
-$release = array( 'tag_name' => 'v2.0.2', 'assets' => array( array( 'name' => 'bottomline-communication.zip', 'browser_download_url' => $repo . '/releases/download/v2.0.2/bottomline-communication.zip' ) ) );
+$release = array( 'tag_name' => 'v9.0.0', 'assets' => array( array( 'name' => 'bottomline-communication.zip', 'browser_download_url' => $repo . '/releases/download/v9.0.0/bottomline-communication.zip' ) ) );
 $failure = false;
 $mock = function ( $pre, $args, $url ) use ( &$release, &$failure ) {
     if ( strpos( $url, 'https://api.github.com/repos/pmunankarmi/bottomline-communication/' ) === 0 ) {
@@ -23,10 +23,10 @@ try {
     delete_site_transient( 'update_themes' );
     wp_update_themes();
     $result = get_site_transient( 'update_themes' );
-    check_update( '2.0.2' === ( $result->response['bottomline-communication']['new_version'] ?? '' ), 'WordPress creates an Update available entry for a newer release' );
+    check_update( '9.0.0' === ( $result->response['bottomline-communication']['new_version'] ?? '' ), 'WordPress creates an Update available entry for a newer release' );
     check_update( $release['assets'][0]['browser_download_url'] === $result->response['bottomline-communication']['package'], 'Native updater receives installable theme ZIP' );
-    $release['tag_name'] = 'v2.0.1';
-    $release['assets'][0]['browser_download_url'] = $repo . '/releases/download/v2.0.1/bottomline-communication.zip';
+    $release['tag_name'] = 'v2.0.2';
+    $release['assets'][0]['browser_download_url'] = $repo . '/releases/download/v2.0.2/bottomline-communication.zip';
     delete_site_transient( 'update_themes' );
     wp_update_themes();
     $result = get_site_transient( 'update_themes' );

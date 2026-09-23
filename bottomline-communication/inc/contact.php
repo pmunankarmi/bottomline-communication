@@ -50,10 +50,3 @@ add_action( 'template_redirect', function () {
         nocache_headers();
     }
 } );
-add_action( 'acf/init', function () {
-    acf_add_local_field_group( array(
-        'key' => 'group_bl_delivery', 'title' => 'Contact form delivery',
-        'fields' => array( array( 'key' => 'field_bl_brief_recipient', 'name' => 'bl_brief_recipient', 'label' => 'Brief recipient email', 'type' => 'text', 'instructions' => 'Defaults to the WordPress administration email. Configure SMTP with your hosting provider for reliable delivery.', 'default_value' => get_option( 'admin_email' ) ) ),
-        'location' => array( array( array( 'param' => 'options_page', 'operator' => '==', 'value' => 'bottomline-settings' ) ) ),
-    ) );
-} );

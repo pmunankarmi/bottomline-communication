@@ -7,7 +7,7 @@ A classic WordPress theme preserving the supplied website's design. Gutenberg is
 | Admin screen | Content |
 | --- | --- |
 | **BottomLine** | Shared logo, contact details, office addresses, social links, footer text and form notification recipient |
-| **Appearance → Customize → Site Identity** | The same logo, synced with the global Logo URL setting |
+| **Appearance → Customize → Site Identity** | The same logo, synced with the global Logo image field |
 | **Appearance → Menus** | Homepage and inner-page navigation |
 | **Pages** | Page headings, introductory text, calls to action and homepage statistics |
 | **Services** | Each service's title, excerpt, image URL, label and disciplines |
@@ -23,7 +23,7 @@ For a client sector, set **Display on** to `clients`, `home` or `both`. The orig
 
 For homepage Work cards, enter a positive **Homepage order**; leave it blank to omit the project. Use `wide` for a wide card. Native **Order** controls Services, Work listing and Clients sector ordering. Work homepage title/summary overrides are optional; the normal title and excerpt are used when blank. The category label preserves the source's display wording, while Work Categories controls filtering.
 
-The **Logo URL** field accepts an image from this site's Media Library so it can map to WordPress's native `custom_logo` attachment. Changing or clearing either setting updates the other. With no custom logo, the original bundled logo is used in the header, footer and preloader.
+Global settings are grouped into **Branding, Contact, Offices, Social Media, Footer, and Form Delivery** tabs. The **Branding → Logo** image picker uploads or selects a Media Library image and shares WordPress's native `custom_logo` attachment. Changing or clearing either setting updates the other. With no custom logo, the original bundled logo is used in the header, footer and preloader.
 
 ## Theme structure
 
