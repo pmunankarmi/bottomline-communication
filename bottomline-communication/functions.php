@@ -10,6 +10,7 @@ require_once get_template_directory() . '/inc/content-types.php';
 require_once get_template_directory() . '/inc/migrate.php';
 require_once get_template_directory() . '/inc/submissions.php';
 require_once get_template_directory() . '/inc/updates.php';
+require_once get_template_directory() . '/inc/about-story.php';
 
 /** PHP defaults are used until an editor explicitly saves a value, including blank. */
 function bl_value( $name, $default, $post_id = null ) {

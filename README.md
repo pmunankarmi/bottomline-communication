@@ -104,3 +104,5 @@ After a push to main passes validation, GitHub publishes an installable release 
 WordPress update checks and optional native automatic updates are scheduled, not instant. For unattended updates, enable auto-updates for this theme in WordPress, or configure the separate push deployment above. This release does not silently change the site's auto-update preference. GitHub API access must be available from the host. All page content remains in PHP/WordPress; the GitHub API supplies update metadata only.
 
 Updater integration test: `BL_WP_PATH=/path/to/disposable/wordpress php tests/updates.php`.
+
+The About page’s story paragraphs and quote use the default WordPress Classic Editor under Pages → About. Use the editor’s blockquote button for the highlighted quote. Existing story fields migrate once into empty page content; existing editor content is preserved.

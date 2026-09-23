@@ -23,12 +23,7 @@ get_header();
         <h2 class="section-title"><?php echo esc_html( bl_value('bl_about_006', 'Fourteen years in.', get_queried_object_id()) ); ?> <span class="accent"><?php echo esc_html( bl_value('bl_about_007', 'Just getting started.', get_queried_object_id()) ); ?></span></h2>
       </div>
       <div class="col-lg-7 story-text reveal">
-        <p><?php echo esc_html( bl_value('bl_about_008', 'BottomLine is a Marketing, Communication and Events agency established for', get_queried_object_id()) ); ?> <strong><?php echo esc_html( bl_value('bl_about_009', 'more than 14 years', get_queried_object_id()) ); ?></strong><?php echo esc_html( bl_value('bl_about_010', ', operated by a team of top-notch creative and experienced talents with hands-on experience in KSA and the MENA region.', get_queried_object_id()) ); ?></p>
-        <p><?php echo esc_html( bl_value('bl_about_011', 'We maintain an extended regional presence across', get_queried_object_id()) ); ?> <strong><?php echo esc_html( bl_value('bl_about_012', 'Riyadh, Jeddah, Dubai and Beirut', get_queried_object_id()) ); ?></strong><?php echo esc_html( bl_value('bl_about_013', '.', get_queried_object_id()) ); ?></p>
-        <div class="story-quote">
-          <p><?php echo esc_html( bl_value('bl_about_014', 'At BottomLine we strive to be your creative and performance-oriented success partner and consultants.', get_queried_object_id()) ); ?></p>
-        </div>
-        <p><?php echo esc_html( bl_value('bl_about_015', 'Our support starts with defining your business needs and the strategic actions to achieving your targets, while keeping your key objectives at the core of everything we do.', get_queried_object_id()) ); ?></p>
+        <?php while ( have_posts() ) : the_post(); the_content(); endwhile; ?>
       </div>
     </div>
   </div>
