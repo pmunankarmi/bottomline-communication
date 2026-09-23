@@ -17,7 +17,7 @@ for p in (root / 'assets/css').glob('*.css'):
         if not target.startswith(('data:', 'http')):
             assert (p.parent / target).is_file(), (p.name, target)
 fields = (root / 'inc/acf-fields.php').read_text()
-assert set(re.findall(r"'type' => '([^']+)'", fields)) == {'text'}
+assert set(re.findall(r"'type' => '([^']+)'", fields)) == {'text', 'textarea', 'repeater'}
 keys = re.findall(r"'key' => '(field_[^']+)'", fields)
 assert len(keys) == len(set(keys)), 'Duplicate ACF field keys'
 assert not (root / 'template-parts').exists()

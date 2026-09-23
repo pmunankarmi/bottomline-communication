@@ -106,3 +106,5 @@ WordPress update checks and optional native automatic updates are scheduled, not
 Updater integration test: `BL_WP_PATH=/path/to/disposable/wordpress php tests/updates.php`.
 
 The About page’s story paragraphs and quote use the default WordPress Classic Editor under Pages → About. Use the editor’s blockquote button for the highlighted quote. Existing story fields migrate once into empty page content; existing editor content is preserved.
+
+About office cards use an Offices repeater with only Country, City and Address / description per row. The homepage CTA section uses one rich-text Content field (Heading 2, bold accent and paragraph) plus Primary button and Secondary button link controls. Existing values migrate once; saved edits and empty rows remain under editor control.

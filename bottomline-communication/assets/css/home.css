@@ -709,7 +709,8 @@
     margin-bottom:12px;position:relative;z-index:2;letter-spacing:-.6px;line-height:1.15;
     max-width:22ch;margin-left:auto;margin-right:auto;
   }
-  .cta-banner .accent{color:var(--teal)}
+  .cta-banner .accent,.cta-banner h2 strong{color:var(--teal);font-weight:inherit}
+  .cta-banner .btn-ghost{color:#fff;border-color:rgba(255,255,255,.25)}
   .cta-banner p{
     font-size:.98rem;opacity:.7;margin-bottom:24px;
     position:relative;z-index:2;max-width:520px;margin-left:auto;margin-right:auto;

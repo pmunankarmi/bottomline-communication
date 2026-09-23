@@ -76,34 +76,15 @@ get_header();
         ?></h2>
     </div>
     <div class="offices-grid row g-4">
+      <?php foreach ( bl_office_rows( get_queried_object_id() ) as $office ) : ?>
       <div class="col-md-6 col-lg-3">
         <div class="office reveal">
-          <span class="sub"><?php echo esc_html( bl_value('bl_about_034', 'KSA', get_queried_object_id()) ); ?></span>
-          <h4><?php echo esc_html( bl_value('bl_about_035', 'Riyadh', get_queried_object_id()) ); ?></h4>
-          <p><?php echo esc_html( bl_value('bl_about_036', 'Office 18B, 4th Floor', get_queried_object_id()) ); ?><br><?php echo esc_html( bl_value('bl_about_037', 'Al Sulaimaniyah, 7612 Salah Ad Din Al Ayyubi Road', get_queried_object_id()) ); ?></p>
+          <span class="sub"><?php echo esc_html( $office['country'] ); ?></span>
+          <h4><?php echo esc_html( $office['city'] ); ?></h4>
+          <p><?php echo nl2br( esc_html( $office['description'] ) ); ?></p>
         </div>
       </div>
-      <div class="col-md-6 col-lg-3">
-        <div class="office reveal">
-          <span class="sub"><?php echo esc_html( bl_value('bl_about_034', 'KSA', get_queried_object_id()) ); ?></span>
-          <h4><?php echo esc_html( bl_value('bl_about_038', 'Jeddah', get_queried_object_id()) ); ?></h4>
-          <p><?php echo esc_html( bl_value('bl_about_039', 'Office No. 3013, 3rd Floor', get_queried_object_id()) ); ?><br><?php echo esc_html( bl_value('bl_about_040', 'Al-Khuraji Business Center', get_queried_object_id()) ); ?><br><?php echo esc_html( bl_value('bl_about_041', 'Madinah Road', get_queried_object_id()) ); ?></p>
-        </div>
-      </div>
-      <div class="col-md-6 col-lg-3">
-        <div class="office reveal">
-          <span class="sub"><?php echo esc_html( bl_value('bl_about_042', 'UAE', get_queried_object_id()) ); ?></span>
-          <h4><?php echo esc_html( bl_value('bl_about_043', 'Dubai', get_queried_object_id()) ); ?></h4>
-          <p><?php echo esc_html( bl_value('bl_about_044', 'Regional presence supporting clients across the Gulf and wider region.', get_queried_object_id()) ); ?></p>
-        </div>
-      </div>
-      <div class="col-md-6 col-lg-3">
-        <div class="office reveal">
-          <span class="sub"><?php echo esc_html( bl_value('bl_about_045', 'Lebanon', get_queried_object_id()) ); ?></span>
-          <h4><?php echo esc_html( bl_value('bl_about_046', 'Beirut', get_queried_object_id()) ); ?></h4>
-          <p><?php echo esc_html( bl_value('bl_about_047', 'Regional presence supporting MENA creative production and content.', get_queried_object_id()) ); ?></p>
-        </div>
-      </div>
+      <?php endforeach; ?>
     </div>
   </div>
 </section>

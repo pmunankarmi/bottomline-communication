@@ -11,6 +11,8 @@ require_once get_template_directory() . '/inc/migrate.php';
 require_once get_template_directory() . '/inc/submissions.php';
 require_once get_template_directory() . '/inc/updates.php';
 require_once get_template_directory() . '/inc/about-story.php';
+require_once get_template_directory() . '/inc/offices.php';
+require_once get_template_directory() . '/inc/cta.php';
 
 /** PHP defaults are used until an editor explicitly saves a value, including blank. */
 function bl_value( $name, $default, $post_id = null ) {

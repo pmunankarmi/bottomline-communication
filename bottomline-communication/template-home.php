@@ -291,11 +291,15 @@ get_header();
 <!-- CTA -->
 <section class="cta-banner" id="contact">
   <div class="container">
-    <h2 class="reveal"><?php echo esc_html( bl_value('bl_home_211', 'Ready to build something', get_queried_object_id()) ); ?> <span class="accent"><?php echo esc_html( bl_value('bl_home_212', 'unforgettable?', get_queried_object_id()) ); ?></span></h2>
-    <p class="reveal"><?php echo esc_html( bl_value('bl_home_213', 'Marketing, communications, or your next flagship event — tell us what you\'re working on and we\'ll get back within one business day.', get_queried_object_id()) ); ?></p>
+    <div class="cta-content reveal"><?php echo wp_kses_post( wpautop( get_post_meta( get_queried_object_id(), 'bl_cta_content', true ) ) ); ?></div>
     <div class="hero-actions reveal" style="justify-content:center;margin-bottom:0">
-      <a href="<?php echo esc_url( bl_url( bl_value( 'bl_home_138', 'contact.html', get_queried_object_id() ) ) ); ?>" class="btn btn-primary magnetic"><?php echo esc_html( bl_value('bl_home_214', 'Start the conversation →', get_queried_object_id()) ); ?></a>
-      <a href="<?php echo esc_url( bl_phone_url( 'bl_events_phone', '+966 56 460 4739' ) ); ?>" class="btn btn-ghost magnetic" style="color:#fff;border-color:rgba(255,255,255,.25)"><?php echo esc_html( bl_value('bl_home_216', 'Call our events team', get_queried_object_id()) ); ?></a>
+      <?php foreach ( array( 'primary', 'secondary' ) as $button ) :
+          $link = get_post_meta( get_queried_object_id(), 'bl_cta_' . $button, true );
+          if ( ! is_array( $link ) || empty( $link['url'] ) ) continue;
+          $new_tab = '_blank' === ( $link['target'] ?? '' );
+      ?>
+      <a href="<?php echo esc_url( bl_url( $link['url'] ) ); ?>" class="btn <?php echo 'primary' === $button ? 'btn-primary' : 'btn-ghost'; ?> magnetic"<?php if ( $new_tab ) echo ' target="_blank" rel="noopener noreferrer"'; ?>><?php echo esc_html( $link['title'] ?? '' ); ?></a>
+      <?php endforeach; ?>
     </div>
   </div>
 </section>
