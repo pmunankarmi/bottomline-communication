@@ -68,7 +68,12 @@ get_header();
   <div class="container">
     <div class="reveal">
       <span class="eyebrow"><span class="line"></span><?php echo esc_html( bl_value('bl_about_031', 'Our Presence', get_queried_object_id()) ); ?></span>
-      <h2 class="section-title"><?php echo esc_html( bl_value('bl_about_032', 'Four cities.', get_queried_object_id()) ); ?> <span class="accent"><?php echo esc_html( bl_value('bl_about_033', 'One creative engine.', get_queried_object_id()) ); ?></span></h2>
+      <h2 class="section-title"><?php
+          $heading = bl_value( 'bl_presence_heading', 'Four cities. One creative engine.', get_queried_object_id() );
+          $parts = preg_split( '/(?<=[.!?])\s+/u', $heading, 2 );
+          echo esc_html( $parts[0] );
+          if ( isset( $parts[1] ) ) echo ' <span class="accent">' . esc_html( $parts[1] ) . '</span>';
+        ?></h2>
     </div>
     <div class="offices-grid row g-4">
       <div class="col-md-6 col-lg-3">

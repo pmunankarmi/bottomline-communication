@@ -24,3 +24,18 @@ function bl_migrate_about_story() {
     update_option( 'bl_about_story_editor_migrated', 1, false );
 }
 add_action( 'init', 'bl_migrate_about_story', 25 );
+
+/** Consolidate the Presence title without replacing existing editor changes. */
+function bl_migrate_presence_heading() {
+    if ( get_option( 'bl_presence_heading_migrated' ) ) return;
+    $pages = get_posts( array( 'post_type' => 'page', 'post_status' => 'any', 'numberposts' => -1, 'meta_key' => '_wp_page_template', 'meta_value' => 'template-about.php' ) );
+    if ( ! $pages ) return;
+    foreach ( $pages as $page ) {
+        if ( metadata_exists( 'post', $page->ID, 'bl_presence_heading' ) ) continue;
+        $heading = trim( bl_value( 'bl_about_032', 'Four cities.', $page->ID ) . ' ' . bl_value( 'bl_about_033', 'One creative engine.', $page->ID ) );
+        update_post_meta( $page->ID, 'bl_presence_heading', $heading );
+        update_post_meta( $page->ID, '_bl_presence_heading', 'field_bl_presence_heading' );
+    }
+    update_option( 'bl_presence_heading_migrated', 1, false );
+}
+add_action( 'init', 'bl_migrate_presence_heading', 26 );
