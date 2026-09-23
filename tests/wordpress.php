@@ -16,7 +16,7 @@ $categories = get_terms( array( 'taxonomy' => 'bl_work_category', 'hide_empty' =
 check( $categories === array( 'Branding', 'Events', 'Digital', 'Campaign', 'Activation', 'Retail' ), 'All six native Work categories' );
 check( ! use_block_editor_for_post_type( 'page' ) && ! use_block_editor_for_post_type( 'bl_work' ), 'Gutenberg disabled' );
 $home = get_page_by_path( 'home' );
-$key = 'bl_home_003'; $existed = metadata_exists( 'post', $home->ID, $key ); $before = get_post_meta( $home->ID, $key, true );
+$key = 'bl_home_011'; $existed = metadata_exists( 'post', $home->ID, $key ); $before = get_post_meta( $home->ID, $key, true );
 update_field( 'field_' . $key, 'Admin test value', $home->ID );
 check( bl_value( $key, 'fallback', $home->ID ) === 'Admin test value', 'ACF page editing works' );
 update_field( 'field_' . $key, '', $home->ID );

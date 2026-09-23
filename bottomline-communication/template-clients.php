@@ -10,8 +10,7 @@ get_header();
 <section class="page-hero">
   <div class="page-hero-inner">
     <span class="page-eyebrow"><?php echo esc_html( bl_value('bl_clients_001', 'Our Clients', get_queried_object_id()) ); ?></span>
-    <h1><?php echo esc_html( bl_value('bl_clients_002', 'Sixty brands.', get_queried_object_id()) ); ?> <span class="accent"><?php echo esc_html( bl_value('bl_clients_003', 'One creative partner.', get_queried_object_id()) ); ?></span></h1>
-    <p><?php echo esc_html( bl_value('bl_clients_004', 'From global enterprises to government bodies and ambitious regional brands — we\'ve partnered with the businesses shaping KSA and the wider MENA region.', get_queried_object_id()) ); ?></p>
+<?php bl_section( 'bl_clients_hero' ); ?>
   </div>
 </section>
 
@@ -32,16 +31,12 @@ get_header();
 </section>
 
 <section class="quote-section">
-  <blockquote class="reveal">
-    <?php echo esc_html( bl_value('bl_clients_131', 'Our clients are our greatest assets and the', get_queried_object_id()) ); ?> <span class="accent"><?php echo esc_html( bl_value('bl_clients_132', 'heartbeat of BottomLine.', get_queried_object_id()) ); ?></span>
-  </blockquote>
-  <cite class="reveal"><?php echo esc_html( bl_value('bl_clients_133', 'The BottomLine Promise', get_queried_object_id()) ); ?></cite>
+  <?php bl_section( 'bl_clients_quote' ); ?>
 </section>
 
 <section class="cta-banner">
-  <h2><?php echo esc_html( bl_value('bl_clients_134', 'Join the', get_queried_object_id()) ); ?> <span style="color:var(--teal)"><?php echo esc_html( bl_value('bl_clients_135', 'next chapter.', get_queried_object_id()) ); ?></span></h2>
-  <p><?php echo esc_html( bl_value('bl_clients_136', 'Marketing, communications, or your next flagship event — let\'s build something worth remembering.', get_queried_object_id()) ); ?></p>
-  <a href="<?php echo esc_url( bl_url( bl_value('bl_clients_137', 'contact.html', get_queried_object_id()) ) ); ?>" class="btn btn-primary"><?php echo esc_html( bl_value('bl_clients_138', 'Start a project →', get_queried_object_id()) ); ?></a>
+<?php bl_section( 'bl_clients_cta' ); ?>
+  <?php bl_section_button( 'bl_clients_button_1', 'btn btn-primary', '' ); ?>
 </section>
 
 

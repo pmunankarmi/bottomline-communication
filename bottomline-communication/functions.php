@@ -13,6 +13,9 @@ require_once get_template_directory() . '/inc/updates.php';
 require_once get_template_directory() . '/inc/about-story.php';
 require_once get_template_directory() . '/inc/offices.php';
 require_once get_template_directory() . '/inc/cta.php';
+require_once get_template_directory() . '/inc/sections.php';
+require_once get_template_directory() . '/inc/section-fields.php';
+require_once get_template_directory() . '/inc/editor.php';
 
 /** PHP defaults are used until an editor explicitly saves a value, including blank. */
 function bl_value( $name, $default, $post_id = null ) {
@@ -21,7 +24,7 @@ function bl_value( $name, $default, $post_id = null ) {
         ? false !== get_option( 'options_' . $name, false )
         : metadata_exists( 'post', $post_id, $name );
     if ( ! $exists ) return $default;
-    $value = function_exists( 'get_field' ) ? get_field( $name, $post_id, false ) : ( 'option' === $post_id ? get_option( 'options_' . $name ) : get_post_meta( $post_id, $name, true ) );
+    $value = 'option' === $post_id ? get_option( 'options_' . $name ) : get_post_meta( $post_id, $name, true );
     return is_scalar( $value ) ? (string) $value : '';
 }
 

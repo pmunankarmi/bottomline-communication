@@ -10,8 +10,7 @@ get_header();
 <section class="page-hero">
   <div class="page-hero-inner">
     <span class="page-eyebrow"><?php echo esc_html( bl_value('bl_projects_001', 'Selected Work', get_queried_object_id()) ); ?></span>
-    <h1><?php echo esc_html( bl_value('bl_projects_002', 'Our projects.', get_queried_object_id()) ); ?> <span class="accent"><?php echo esc_html( bl_value('bl_projects_003', 'One creative engine.', get_queried_object_id()) ); ?></span></h1>
-    <p><?php echo esc_html( bl_value('bl_projects_004', 'Branding, events, campaigns and digital — for global enterprises, government bodies and ambitious regional brands across KSA and the wider MENA region.', get_queried_object_id()) ); ?></p>
+<?php bl_section( 'bl_projects_hero' ); ?>
   </div>
 </section>
 
@@ -43,9 +42,8 @@ get_header();
 </section>
 
 <section class="cta-banner">
-  <h2><?php echo esc_html( bl_value('bl_projects_013', 'Ready to build the next one?', get_queried_object_id()) ); ?></h2>
-  <p><?php echo esc_html( bl_value('bl_projects_014', 'Marketing, communications, or a flagship event — tell us what you\'re planning and we\'ll get back within one business day.', get_queried_object_id()) ); ?></p>
-  <a href="<?php echo esc_url( bl_url( bl_value('bl_projects_015', 'contact.html', get_queried_object_id()) ) ); ?>" class="btn btn-primary"><?php echo esc_html( bl_value('bl_projects_016', 'Start the conversation →', get_queried_object_id()) ); ?></a>
+<?php bl_section( 'bl_projects_cta' ); ?>
+  <?php bl_section_button( 'bl_projects_button_1', 'btn btn-primary', '' ); ?>
 </section>
 
 

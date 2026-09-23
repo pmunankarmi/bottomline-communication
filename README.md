@@ -33,7 +33,7 @@ Global settings are grouped into **Branding, Contact, Offices, Social Media, Foo
 - `front-page.php`: WordPress's front-page entry point; loads `template-home.php` once.
 - `template-about.php`, `template-projects.php`, `template-clients.php`, `template-contact.php`: each page's complete layout.
 - `inc/content-types.php`: Services, Work, Clients, taxonomies and their ACF fields.
-- `inc/acf-fields.php`: page-specific text fields.
+- `inc/acf-fields.php` and `inc/section-fields.php`: page labels, section editors and repeaters.
 - `inc/global-settings.php` and `inc/logo.php`: global settings and logo synchronization.
 - `inc/contact.php` and `inc/submissions.php`: form handling, private storage and CSV export.
 - `inc/default-content.php`, `inc/default-clients.php`, `inc/migrate.php`, `inc/legacy-fields.php`: one-time original-content import and preservation of previous field edits.
@@ -108,3 +108,11 @@ Updater integration test: `BL_WP_PATH=/path/to/disposable/wordpress php tests/up
 The About page’s story paragraphs and quote use the default WordPress Classic Editor under Pages → About. Use the editor’s blockquote button for the highlighted quote. Existing story fields migrate once into empty page content; existing editor content is preserved.
 
 About office cards use an Offices repeater with only Country, City and Address / description per row. The homepage CTA section uses one rich-text Content field (Heading 2, bold accent and paragraph) plus Primary button and Secondary button link controls. Existing values migrate once; saved edits and empty rows remain under editor control.
+
+## Simplified page editing (2.1.0)
+
+All five page templates use section-level content editors instead of fields for individual text fragments. Each inner-page hero has a section label and one editor for its full heading and introduction. Headings, quotes and CTA content stay together; link controls include both button text and destination. Homepage benefits, process steps, statistics, and About value cards use repeaters. Standard form labels and placeholders remain PHP interface text, retaining previously saved wording. Contact details remain in global settings.
+
+In the Classic Editor or an ACF content editor, select words and choose **Formats → Gradient text** or **Accent text**. Use the regular Bold and Blockquote controls for emphasis and quotations. Formats appear in the editor’s second toolbar row (use Toolbar Toggle if hidden). The same class is styled in the editor and frontend; no separate gradient-text field is needed.
+
+Existing values migrate once into the consolidated fields. Later editor changes, removed repeater rows and deliberately empty content are preserved. ACF Pro is required to edit repeaters and galleries.

@@ -1,0 +1,10 @@
+/* Match the public site while editing rich text. */
+.text-gradient{
+  display:inline-block;
+  background:linear-gradient(120deg,#4dcfcc 0%,#ffd980 100%);
+  -webkit-background-clip:text;background-clip:text;
+  color:transparent;
+  padding-bottom:.15em;margin-bottom:-.15em;
+}
+.text-accent{color:#4dcfcc}
+blockquote{padding:24px 30px;border-left:3px solid #4dcfcc;background:#f7f4fb;border-radius:14px;font-style:italic}
