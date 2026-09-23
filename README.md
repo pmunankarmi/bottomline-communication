@@ -1,37 +1,58 @@
 # BottomLine Communication — WordPress theme
 
-Classic WordPress conversion of the five pages in the supplied ZIP. The reference homepage was compared with the source: its only additional code was hosting analytics. Original page layouts, Bootstrap 5.3.3 styling, images, fonts, copy, project order and interactions are retained.
+A classic WordPress theme preserving the supplied website's design. Gutenberg is disabled. Page content, cards, galleries and panels render in PHP; JavaScript handles interactions and contact-form validation.
 
-## Install
+## Where to edit content
 
-1. Install and activate your licensed **ACF Pro** plugin. It is not bundled in this repository.
-2. Upload the `bottomline-communication` directory to `wp-content/themes/`, or install the supplied theme ZIP in **Appearance → Themes → Add New → Upload Theme**.
-3. Activate **BottomLine Communication**. Missing Home, About, Selected Work, Clients and Start a Project pages are created automatically, with native page templates. A homepage is selected only if one is not already configured.
-4. If these page slugs already exist, assign their matching **BottomLine** templates in the page editor. Select the intended Home page in **Settings → Reading**. Existing content and homepage settings are not overwritten.
-5. Configure **BottomLine → Contact form delivery** and your host's WordPress mail/SMTP service. Test delivery to your real inbox before launch.
+| Admin screen | Content |
+| --- | --- |
+| **BottomLine** | Shared logo, contact details, office addresses, social links, footer text and form notification recipient |
+| **Appearance → Customize → Site Identity** | The same logo, synced with the global Logo URL setting |
+| **Appearance → Menus** | Homepage and inner-page navigation |
+| **Pages** | Page headings, introductory text, calls to action and homepage statistics |
+| **Services** | Each service's title, excerpt, image URL, label and disciplines |
+| **Work** | Each project's title, main description, excerpt, gallery and homepage display settings |
+| **Work → Work Categories** | Branding, Events, Digital, Campaign, Activation and Retail; these drive the project filters |
+| **Work → Scope of Work** | Reusable tags displayed in project detail panels |
+| **Clients** | One post per sector, such as Hospitality or Retail & Fashion, with an ACF Pro logo gallery |
+| **Form Submissions** | Saved contact briefs, email notification status and CSV export; administrators only |
 
-## Edit in WordPress admin
+Use **ACF Pro galleries** to add/remove images and drag to reorder. Other custom fields are text. WordPress's native editor handles Work descriptions, and native taxonomies handle categories and scope tags.
 
-- **Pages → Edit:** page headings, descriptions, labels, links, image URL text and homepage statistics.
-- **BottomLine:** navigation fallback text, shared footer, contact links, individual social URLs and the brief recipient.
-- **BottomLine → project abbreviation:** each project's card/detail copy, category, metadata, scope items and gallery image URLs. Homepage-specific source copy remains separate where the original differs.
-- **Appearance → Menus:** optionally assign native WordPress menus to Homepage navigation or Inner-page navigation. Until assigned, the original navigation appears exactly as supplied.
-- Upload replacement images in **Media**, copy their file URL, and paste it into the corresponding ACF **text** field.
+For a client sector, set **Display on** to `clients`, `home` or `both`. The original homepage logo selection is a separate **Homepage logos** post. The source includes some clients represented by text instead of images; these remain in **Clients without logo images**, using `position: name` entries separated by `|`. Replace those entries with gallery images whenever their actual logos are available.
 
-All ACF fields are registered in PHP and use only `type => text`. No WYSIWYG, image, repeater, flexible-content or JSON fields. Labels identify the original content. Text that originally contains emphasis is split around the markup; the markup stays in PHP. All original content is also embedded directly in PHP template parts as fallback values. The site renders even without ACF, but editing requires ACF Pro.
+For homepage Work cards, enter a positive **Homepage order**; leave it blank to omit the project. Use `wide` for a wide card. Native **Order** controls Services, Work listing and Clients sector ordering. Work homepage title/summary overrides are optional; the normal title and excerpt are used when blank. The category label preserves the source's display wording, while Work Categories controls filtering.
 
-Saving a blank text field deliberately hides that text. Saved admin content takes precedence over PHP defaults on subsequent Git deployments. To change an already edited value, edit that field in WordPress; changing its PHP fallback does not overwrite the database. Layout changes, additional project slots and gallery slots belong in the PHP templates and matching PHP field definitions.
+The **Logo URL** field accepts an image from this site's Media Library so it can map to WordPress's native `custom_logo` attachment. Changing or clearing either setting updates the other. With no custom logo, the original bundled logo is used in the header, footer and preloader.
 
-## Implementation
+## Theme structure
 
-- Standard `functions.php`, `header.php`, `footer.php`, `front-page.php`, `page.php`, `index.php`, `404.php` and named page templates.
-- Reusable navigation, footer, homepage sections, project cards and project detail template parts.
-- Styles and scripts loaded with `wp_enqueue_style()` / `wp_enqueue_script()`; content fingerprints invalidate asset URLs when files change.
-- Every project card, description, scope item and gallery image renders on the server. There is no JavaScript content dataset, `innerHTML` generation, JSON content or fetch-based rendering.
-- JavaScript only enhances the original preloader, animation, counters, filters, budget selection, mobile navigation and PHP-rendered project panels. Removing all JavaScript would remove these interactive behaviors. A no-JavaScript stylesheet keeps the content and project details readable.
-- The original form only simulated success. It now submits through WordPress `admin-post.php` and `wp_mail()`, with nonce checks, validation, a honeypot, a brief rate limit, and error handling. Success means the configured mail transport accepted the message; actual inbox delivery depends on the mail provider.
-- Old `/index.html`, `/about.html`, `/projects.html`, `/clients.html` and `/contact.html` URLs redirect through WordPress to the corresponding pages. Existing physical HTML files on the host must be removed or redirected by the host so those requests reach WordPress.
-- The original social links were `#`; replace them in admin when the final social URLs are available. Original contact copy, including the email address and copyright year, is preserved.
+- `header.php`: document head, shared logo and native WordPress navigation.
+- `footer.php`: shared footer and floating contact links.
+- `template-home.php`: the entire homepage layout and PHP content loops, directly in this file.
+- `front-page.php`: WordPress's front-page entry point; loads `template-home.php` once.
+- `template-about.php`, `template-projects.php`, `template-clients.php`, `template-contact.php`: each page's complete layout.
+- `inc/content-types.php`: Services, Work, Clients, taxonomies and their ACF fields.
+- `inc/acf-fields.php`: page-specific text fields.
+- `inc/global-settings.php` and `inc/logo.php`: global settings and logo synchronization.
+- `inc/contact.php` and `inc/submissions.php`: form handling, private storage and CSV export.
+- `inc/default-content.php`, `inc/default-clients.php`, `inc/migrate.php`, `inc/legacy-fields.php`: one-time original-content import and preservation of previous field edits.
+- `screenshot.png`: the actual homepage screenshot for Appearance → Themes.
+
+There are no `content-home.php`, navigation template parts or nested template-part chains. Assets use native WordPress enqueue functions. Content remains in PHP and WordPress posts/meta rather than JavaScript datasets or JSON files.
+
+## Install or update
+
+1. Install and activate your licensed **ACF Pro** plugin; it is not bundled.
+2. Upload the theme ZIP through **Appearance → Themes**, or deploy the `bottomline-communication` folder into `wp-content/themes/`.
+3. Activate the theme. Missing standard pages and page-template assignments are created; existing page content and existing homepage settings are not overwritten.
+4. On the first request, the theme imports the original 6 Services, 24 Work posts, 10 client sectors, Homepage logos, categories, scope tags and bundled gallery images. The uploads directory must be writable. Subsequent deployments do not overwrite these posts, recreate deliberately deleted content or reorder editor changes. Previous text-field edits are retained where they map to the new fields.
+5. If matching pages already existed, assign their matching **BottomLine** templates. Set the intended homepage in **Settings → Reading**.
+6. Set the notification recipient under **BottomLine** and configure the host's WordPress mail/SMTP service.
+
+The form uses bundled **jQuery Validation** and independent server-side checks. Valid briefs are saved privately before the email notification is attempted. A failed notification remains visible in Form Submissions, and the visitor receives a receipt because the brief is stored. CSV export requires an administrator login and a valid nonce, and neutralizes spreadsheet formulas.
+
+ACF Pro is required for the gallery editing interface and options page. Front-end gallery rendering uses stored attachment IDs and continues to work if ACF is temporarily inactive. Saved admin values override PHP fallback text. Old `.html` URLs redirect through WordPress; remove or redirect any physical static HTML files on the host so requests reach WordPress.
 
 ## Automatic deployment after Git pushes
 
@@ -65,8 +86,11 @@ find bottomline-communication -name '*.php' -exec php -l {} \;
 for file in bottomline-communication/assets/js/*.js; do node --check "$file"; done
 python3 tests/check-theme.py
 BL_WP_PATH=/path/to/disposable/wordpress php tests/wordpress.php
+BL_WP_PATH=/path/to/disposable/wordpress python3 tests/check-http.py
 ```
 
-`tests/wordpress.php` requires the active theme and ACF. It verifies PHP rendering, field registration, saved/blank/default behavior, pages/templates and image paths on a disposable WordPress installation. It temporarily changes one text field and restores it.
+Integration tests require a disposable **local** WordPress installation. They check native content imports, logo sync in both directions, galleries, taxonomies, PHP-rendered pages and all registered template fields. HTTP tests verify form validation, private submission storage, receipt handling, CSV contents, and export capability/nonce checks.
 
-`tests/check-http.py` is restricted to localhost and tests page responses, old URL redirects, nonce/validation failures, simulated mail failure, receipt rendering and rate limiting. Install `tests/local-mail-interceptor.php` **only in the disposable site's `wp-content/mu-plugins`** first; never deploy it to production. It intercepts all mail without sending it. Wait at least one minute between complete test runs to allow the rate limit to expire.
+For HTTP tests, install `tests/local-mail-interceptor.php` in the disposable site's `wp-content/mu-plugins` directory. It intercepts all mail; never deploy it to production. Tests create local test submissions and a subscriber account. Wait at least one minute between complete HTTP runs for the form rate limit to expire.
+
+The local test environment uses the shared ACF API; the licensed ACF Pro gallery/options UI and actual production mail delivery still need verification on the target WordPress installation.

@@ -4,16 +4,20 @@ defined( 'ABSPATH' ) || exit;
 require_once get_template_directory() . '/inc/acf-fields.php';
 require_once get_template_directory() . '/inc/contact.php';
 require_once get_template_directory() . '/inc/setup.php';
+require_once get_template_directory() . '/inc/global-settings.php';
+require_once get_template_directory() . '/inc/logo.php';
+require_once get_template_directory() . '/inc/content-types.php';
+require_once get_template_directory() . '/inc/migrate.php';
+require_once get_template_directory() . '/inc/submissions.php';
 
 /** PHP defaults are used until an editor explicitly saves a value, including blank. */
 function bl_value( $name, $default, $post_id = null ) {
     $post_id = $post_id ?: get_queried_object_id();
-    if ( ! function_exists( 'get_field' ) ) return $default;
     $exists = 'option' === $post_id
         ? false !== get_option( 'options_' . $name, false )
         : metadata_exists( 'post', $post_id, $name );
     if ( ! $exists ) return $default;
-    $value = get_field( $name, $post_id, false );
+    $value = function_exists( 'get_field' ) ? get_field( $name, $post_id, false ) : ( 'option' === $post_id ? get_option( 'options_' . $name ) : get_post_meta( $post_id, $name, true ) );
     return is_scalar( $value ) ? (string) $value : '';
 }
 
@@ -40,6 +44,7 @@ function bl_page_kind() {
 function bl_asset_version( $file ) { return substr( hash_file( 'sha256', get_theme_file_path( $file ) ), 0, 12 ); }
 add_action( 'after_setup_theme', function () {
     add_theme_support( 'title-tag' );
+    add_theme_support( 'custom-logo', array( 'flex-width' => true, 'flex-height' => true ) );
     register_nav_menus( array( 'primary-home' => 'Homepage navigation', 'primary-inner' => 'Inner-page navigation' ) );
     add_theme_support( 'post-thumbnails' );
     add_theme_support( 'html5', array( 'search-form', 'comment-form', 'comment-list', 'gallery', 'caption', 'style', 'script' ) );
@@ -51,6 +56,10 @@ add_action( 'wp_enqueue_scripts', function () {
     wp_enqueue_style( 'bl-fonts', 'https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap', array(), null );
     wp_enqueue_style( 'bl-page', get_theme_file_uri( 'assets/css/' . $kind . '.css' ), array( 'bl-bootstrap', 'bl-fonts' ), bl_asset_version( 'assets/css/' . $kind . '.css' ) );
     wp_enqueue_style( 'bl-theme', get_stylesheet_uri(), array( 'bl-page' ), bl_asset_version( 'style.css' ) );
+    if ( 'contact' === $kind ) {
+        wp_enqueue_script( 'bl-jquery-validation', get_theme_file_uri( 'assets/js/jquery.validate.min.js' ), array( 'jquery' ), '1.21.0', true );
+        wp_enqueue_script( 'bl-contact-validation', get_theme_file_uri( 'assets/js/contact-validation.js' ), array( 'bl-jquery-validation' ), bl_asset_version( 'assets/js/contact-validation.js' ), true );
+    }
     wp_enqueue_script( 'bl-page', get_theme_file_uri( 'assets/js/' . $kind . '.js' ), array(), bl_asset_version( 'assets/js/' . $kind . '.js' ), true );
     wp_enqueue_script( 'bl-interactions', get_theme_file_uri( 'assets/js/interactions.js' ), array( 'bl-page' ), bl_asset_version( 'assets/js/interactions.js' ), true );
 } );

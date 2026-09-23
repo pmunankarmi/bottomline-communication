@@ -20,7 +20,7 @@ function bl_handle_brief() {
         if ( ! is_string( $raw ) || strlen( $raw ) > 10000 ) wp_die( 'Invalid form input.', '', array( 'response' => 400, 'back_link' => true ) );
         $input[ $key ] = 'message' === $key ? sanitize_textarea_field( wp_unslash( $raw ) ) : sanitize_text_field( wp_unslash( $raw ) );
     }
-    $allowed = array( 'Marketing', 'Event Management', 'Branding', 'Content', 'Animation', 'Website & Apps' );
+    $allowed = wp_list_pluck( bl_content_posts( 'bl_service' ), 'post_title' );
     $submitted = isset( $_POST['service'] ) && is_array( $_POST['service'] ) ? wp_unslash( $_POST['service'] ) : array();
     $services = array_intersect( $allowed, array_filter( $submitted, 'is_string' ) );
     if ( ! $input['name'] || ! is_email( $input['email'] ) || ! $input['message'] || ! $services ) wp_die( 'Please enter your name, a valid email, at least one service and your project brief.', '', array( 'response' => 400, 'back_link' => true ) );
@@ -32,11 +32,13 @@ function bl_handle_brief() {
     foreach ( $input as $key => $value ) $message .= ucfirst( $key ) . ': ' . $value . "\n\n";
     $message .= 'Services: ' . implode( ', ', $services );
     set_transient( $rate_key, 1, MINUTE_IN_SECONDS );
-    $sent = wp_mail( $recipient, 'BottomLine project brief: ' . $input['name'], $message, array( 'Reply-To: ' . sanitize_email( $input['email'] ) ) );
-    if ( ! $sent ) {
+    $submission_id = bl_save_submission( $input, $services );
+    if ( is_wp_error( $submission_id ) ) {
         delete_transient( $rate_key );
-        wp_die( 'Your brief could not be sent. Please go back and try again, or call our team.', '', array( 'response' => 503, 'back_link' => true ) );
+        wp_die( 'Your brief could not be saved. Please try again or call our team.', '', array( 'response' => 503, 'back_link' => true ) );
     }
+    $sent = wp_mail( $recipient, 'BottomLine project brief: ' . $input['name'], $message, array( 'Reply-To: ' . sanitize_email( $input['email'] ) ) );
+    update_post_meta( $submission_id, '_bl_delivery', $sent ? 'Accepted by mail transport' : 'Failed — brief saved' );
     $token = strtolower( wp_generate_password( 32, false, false ) );
     set_transient( 'bl_brief_' . $token, 'sent', 10 * MINUTE_IN_SECONDS );
     wp_safe_redirect( add_query_arg( 'brief', $token, bl_url( 'contact.html' ) ) . '#form', 303 );

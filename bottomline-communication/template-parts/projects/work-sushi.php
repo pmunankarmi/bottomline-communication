@@ -1,8 +1,0 @@
-<?php defined( 'ABSPATH' ) || exit; ?>
-<aside class="project-panel" id="project-sushi" aria-hidden="true" role="dialog" aria-modal="true" aria-label="<?php echo esc_attr( bl_value('bl_project_sushi_001', 'Sushi Library', 'option') ); ?>" tabindex="-1">
-<button class="panel-close" aria-label="<?php echo esc_attr( bl_value('bl_project_sushi_002', 'Close', 'option') ); ?>"><svg viewBox="0 0 24 24"><path d="M6 6 L18 18 M18 6 L6 18"/></svg></button>
-<div class="panel-cover" style="background-image:url('<?php echo esc_url( bl_url( bl_value('bl_project_sushi_003', 'projects/sushi-1.jpg', 'option') ) ); ?>')"><span class="panel-cover-cat">Activation · Hospitality</span></div>
-<div class="panel-body"><h2 class="panel-title">Sushi Library</h2><div class="panel-meta"><span>2024</span><span>F&B</span></div><p class="panel-desc">Japanese-themed launch activation for Sushi Library — kimono talent, cherry-blossom set design, themed merchandise and immersive customer photo experience.</p>
-<div class="panel-scope"><h4>Scope of work</h4><ul><li>Themed set design</li><li>Talent & costume</li><li>Merchandise</li><li>Photography</li><li>On-site operations</li></ul></div>
-<div class="panel-gallery"><h4>Gallery</h4><div class="panel-gallery-grid"><img src="<?php echo esc_url( bl_url( bl_value('bl_project_sushi_003', 'projects/sushi-1.jpg', 'option') ) ); ?>" alt="<?php echo esc_attr( bl_value('bl_project_sushi_001', 'Sushi Library', 'option') ); ?>" loading="lazy" /></div></div>
-<div class="panel-footer"><p>Working on something similar?</p><a href="<?php echo esc_url( bl_url( bl_value('bl_project_sushi_004', 'contact.html', 'option') ) ); ?>" class="btn btn-primary">Start a project →</a></div></div></aside>

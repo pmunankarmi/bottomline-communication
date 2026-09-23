@@ -1,5 +1,4 @@
 <?php
+/** WordPress front-page entry point; homepage markup lives in template-home.php. */
 defined( 'ABSPATH' ) || exit;
-get_header();
-get_template_part( 'template-parts/content-home' );
-get_footer();
+require get_theme_file_path( 'template-home.php' );
