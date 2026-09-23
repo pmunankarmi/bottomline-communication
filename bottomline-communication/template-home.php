@@ -38,14 +38,9 @@ get_header();
       </div>
     </div>
 
-    <!-- RIGHT: Floating gradient orbs -->
+    <!-- Static brand signature, shared with the site's selected logo. -->
     <div class="col-lg-4 hero-visual" aria-hidden="true">
-      <div class="orbs">
-        <div class="orb orb-1"></div>
-        <div class="orb orb-2"></div>
-        <div class="orb orb-3"></div>
-        <div class="orb orb-4"></div>
-      </div>
+      <img class="hero-brand-mark" src="<?php echo esc_url( bl_logo_url() ); ?>" alt="" decoding="async" />
     </div>
    </div>
   </div>
@@ -143,13 +138,13 @@ get_header();
     <div class="projects-grid row g-4 reveal-stagger">
 
 <?php $home_work = bl_content_posts( 'bl_work', true ); ?>
-<?php foreach ( $home_work as $work ) : $wide = 'wide' === bl_value( 'work_home_width', '', $work->ID ); ?>
-      <div class="<?php echo $wide ? 'col-md-8' : 'col-md-4'; ?>"><article class="project<?php echo $wide ? ' p-wide' : ''; ?>" data-project="<?php echo esc_attr( $work->post_name ); ?>" style="--proj-img:url('<?php echo esc_url( bl_url( bl_value( 'work_cover', '', $work->ID ) ) ); ?>')">
+<?php foreach ( $home_work as $work ) : ?>
+      <div class="project-col"><article class="project" data-project="<?php echo esc_attr( $work->post_name ); ?>" style="--proj-img:url('<?php echo esc_url( bl_url( bl_value( 'work_cover', '', $work->ID ) ) ); ?>')">
         <span class="project-mark"><?php echo esc_html( bl_value( 'work_home_mark', '', $work->ID ) ); ?></span>
         <span class="project-tag"><?php echo esc_html( bl_value( 'work_category', '', $work->ID ) ); ?></span>
         <div><h3><?php echo esc_html( bl_value( 'work_home_title', $work->post_title, $work->ID ) ?: $work->post_title ); ?></h3>
         <p><?php echo esc_html( bl_value( 'work_home_summary', $work->post_excerpt, $work->ID ) ?: $work->post_excerpt ); ?></p></div>
-        <div class="project-meta"><span><?php echo esc_html( implode( ' · ', array_slice( bl_work_meta( $work->ID ), 0, 2 ) ) ); ?></span><span class="arrow">→</span></div>
+        <div class="project-meta"><span class="arrow">→</span></div>
       </article></div>
 <?php endforeach; ?>
 
@@ -247,7 +242,6 @@ get_header();
   <div class="panel-cover" style="background-image:url('<?php echo esc_url( bl_url( bl_value( 'work_cover', '', $work->ID ) ) ); ?>')"><span class="panel-cover-cat"><?php echo esc_html( bl_value( 'work_category', '', $work->ID ) ); ?></span></div>
   <div class="panel-body">
     <h2 class="panel-title"><?php echo esc_html( $work->post_title ); ?></h2>
-    <div class="panel-meta"><?php foreach ( bl_work_meta( $work->ID ) as $meta ) : ?><span><?php echo esc_html( $meta ); ?></span><?php endforeach; ?></div>
     <p class="panel-desc"><?php echo wp_kses( bl_value( 'work_home_description', '', $work->ID ) ? esc_html( bl_value( 'work_home_description', '', $work->ID ) ) : $work->post_content, array( 'strong' => array(), 'em' => array(), 'br' => array() ) ); ?></p>
     <div class="panel-scope"><h4>Scope of work</h4><ul><?php foreach ( bl_work_scope( $work->ID ) as $scope ) : ?><li><?php echo esc_html( $scope ); ?></li><?php endforeach; ?></ul></div>
     <div class="panel-gallery"><h4>Gallery</h4><div class="panel-gallery-grid">

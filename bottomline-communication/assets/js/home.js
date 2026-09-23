@@ -131,24 +131,5 @@
   window.addEventListener('scroll', updateProcess, {passive:true});
   updateProcess();
 
-  // ============ HERO ORBS MOUSE PARALLAX ============
-  const orbs = document.querySelector('.orbs');
-  const hero = document.querySelector('.hero');
-  let mx = 0, my = 0, tx = 0, ty = 0;
-  hero.addEventListener('mousemove', (e) => {
-    const r = hero.getBoundingClientRect();
-    mx = (e.clientX - r.left) / r.width - 0.5;
-    my = (e.clientY - r.top) / r.height - 0.5;
-  });
-  function orbLoop(){
-    if (orbs) {
-      tx += (mx * 22 - tx) * 0.05;
-      ty += (my * 18 - ty) * 0.05;
-      orbs.style.transform = `translate(${tx}px, ${ty}px)`;
-    }
-    requestAnimationFrame(orbLoop);
-  }
-  orbLoop();
-
 
 })();
