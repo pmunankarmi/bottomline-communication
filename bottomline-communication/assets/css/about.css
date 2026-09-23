@@ -93,6 +93,7 @@
   .pillars{background:var(--paper-soft)}
   .pillars-grid{margin-top:50px}
   .pillar{
+    height:100%;
     padding:42px 36px;background:#fff;border:1px solid var(--line);border-radius:20px;
     transition:transform .35s, box-shadow .35s;
   }

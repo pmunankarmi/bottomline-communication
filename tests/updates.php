@@ -25,8 +25,8 @@ try {
     $result = get_site_transient( 'update_themes' );
     check_update( '9.0.0' === ( $result->response['bottomline-communication']['new_version'] ?? '' ), 'WordPress creates an Update available entry for a newer release' );
     check_update( $release['assets'][0]['browser_download_url'] === $result->response['bottomline-communication']['package'], 'Native updater receives installable theme ZIP' );
-    $release['tag_name'] = 'v2.0.2';
-    $release['assets'][0]['browser_download_url'] = $repo . '/releases/download/v2.0.2/bottomline-communication.zip';
+    $release['tag_name'] = 'v' . wp_get_theme( 'bottomline-communication' )->get( 'Version' );
+    $release['assets'][0]['browser_download_url'] = $repo . '/releases/download/' . $release['tag_name'] . '/bottomline-communication.zip';
     delete_site_transient( 'update_themes' );
     wp_update_themes();
     $result = get_site_transient( 'update_themes' );
