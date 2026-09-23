@@ -265,9 +265,23 @@
   }
   .stats-band .hero-stat-label{color:var(--muted)}
 
-  /* Static brand signature, using the existing logo without motion or distortion. */
+  /* The wordmark's crossing strokes form a continuous, orthogonal pattern. */
   .hero-visual{display:grid;place-items:center;min-height:360px}
-  .hero-brand-mark{display:block;width:100%;max-width:340px;height:auto;object-fit:contain}
+  .hero-line-pattern{display:block;width:100%;max-width:400px;height:auto;overflow:visible}
+  .brand-line{stroke:#fff;stroke-width:2.5;stroke-linecap:round;transform-box:view-box;transform-origin:200px 180px}
+  .brand-line-h1{animation:brandLineH1 14s ease-in-out infinite}
+  .brand-line-h2{stroke:var(--teal);opacity:.65;animation:brandLineH2 18s ease-in-out infinite}
+  .brand-line-h3{opacity:.35;animation:brandLineH3 16s ease-in-out infinite}
+  .brand-line-v1{animation:brandLineV1 16s ease-in-out infinite}
+  .brand-line-v2{stroke:var(--teal);animation:brandLineV2 14s ease-in-out infinite}
+  .brand-line-v3{opacity:.35;animation:brandLineV3 18s ease-in-out infinite}
+  @keyframes brandLineH1{0%,100%{transform:translateY(0) scaleX(1)}50%{transform:translateY(45px) scaleX(.78)}}
+  @keyframes brandLineH2{0%,100%{transform:translateY(0) scaleX(.85)}50%{transform:translateY(65px) scaleX(1.15)}}
+  @keyframes brandLineH3{0%,100%{transform:translateY(0) scaleX(1)}50%{transform:translateY(-50px) scaleX(.7)}}
+  @keyframes brandLineV1{0%,100%{transform:translateX(0) scaleY(1)}50%{transform:translateX(65px) scaleY(.8)}}
+  @keyframes brandLineV2{0%,100%{transform:translateX(0) scaleY(.9)}50%{transform:translateX(-55px) scaleY(1.15)}}
+  @keyframes brandLineV3{0%,100%{transform:translateX(0) scaleY(1)}50%{transform:translateX(-65px) scaleY(.75)}}
+  @media (prefers-reduced-motion:reduce){.brand-line{animation:none}}
 
   /* Hero stagger load (eyebrow, actions, stats) */
   .load{opacity:0;transform:translateY(20px)}

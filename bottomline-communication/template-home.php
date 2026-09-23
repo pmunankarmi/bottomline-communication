@@ -38,9 +38,16 @@ get_header();
       </div>
     </div>
 
-    <!-- Static brand signature, shared with the site's selected logo. -->
+    <!-- Animated orthogonal strokes inspired by the BottomLine wordmark. -->
     <div class="col-lg-4 hero-visual" aria-hidden="true">
-      <img class="hero-brand-mark" src="<?php echo esc_url( bl_logo_url() ); ?>" alt="" decoding="async" />
+      <svg class="hero-line-pattern" viewBox="0 0 400 360" fill="none" aria-hidden="true" focusable="false">
+        <g class="brand-line brand-line-h1"><path d="M40 170H370" /></g>
+        <g class="brand-line brand-line-h2"><path d="M95 80H310" /></g>
+        <g class="brand-line brand-line-h3"><path d="M70 275H325" /></g>
+        <g class="brand-line brand-line-v1"><path d="M175 30V325" /></g>
+        <g class="brand-line brand-line-v2"><path d="M145 135V300" /></g>
+        <g class="brand-line brand-line-v3"><path d="M290 60V250" /></g>
+      </svg>
     </div>
    </div>
   </div>
