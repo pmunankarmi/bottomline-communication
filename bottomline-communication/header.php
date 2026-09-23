@@ -20,20 +20,7 @@
   </a>
   <?php
   $menu_location = $home_header ? 'primary-home' : 'primary-inner';
-  if ( has_nav_menu( $menu_location ) ) {
-      wp_nav_menu( array( 'theme_location' => $menu_location, 'container' => false, 'menu_class' => 'nav-links', 'depth' => 1 ) );
-  } else {
-      ?>
-      <ul class="nav-links">
-        <li><a href="<?php echo esc_url( home_url( '/#about' ) ); ?>">About</a></li>
-        <li><a href="<?php echo esc_url( home_url( '/#services' ) ); ?>">Services</a></li>
-        <li><a href="<?php echo esc_url( home_url( '/#projects' ) ); ?>">Work</a></li>
-        <?php if ( $home_header ) : ?><li><a href="<?php echo esc_url( home_url( '/#process' ) ); ?>">Process</a></li><?php endif; ?>
-        <li><a href="<?php echo esc_url( home_url( '/#clients' ) ); ?>">Clients</a></li>
-        <li><a href="<?php echo esc_url( home_url( '/#contact' ) ); ?>">Contact</a></li>
-      </ul>
-      <?php
-  }
+  wp_nav_menu( array( 'theme_location' => $menu_location, 'container' => false, 'menu_class' => 'nav-links', 'depth' => 1, 'fallback_cb' => false ) );
   ?>
   <?php if ( $home_header ) : ?><div class="nav-actions"><?php endif; ?>
     <a href="<?php echo esc_url( 'contact' === bl_page_kind() ? '#form' : bl_url( 'contact.html' ) ); ?>" class="nav-cta"><?php echo 'contact' === bl_page_kind() ? 'Jump to form ↓' : 'Start a project →'; ?></a>

@@ -16,6 +16,7 @@ require_once get_template_directory() . '/inc/cta.php';
 require_once get_template_directory() . '/inc/sections.php';
 require_once get_template_directory() . '/inc/section-fields.php';
 require_once get_template_directory() . '/inc/editor.php';
+require_once get_template_directory() . '/inc/menus.php';
 
 /** PHP defaults are used until an editor explicitly saves a value, including blank. */
 function bl_value( $name, $default, $post_id = null ) {

@@ -116,3 +116,7 @@ All five page templates use section-level content editors instead of fields for 
 In the Classic Editor or an ACF content editor, select words and choose **Formats → Gradient text** or **Accent text**. Use the regular Bold and Blockquote controls for emphasis and quotations. Formats appear in the editor’s second toolbar row (use Toolbar Toggle if hidden). The same class is styled in the editor and frontend; no separate gradient-text field is needed.
 
 Existing values migrate once into the consolidated fields. Later editor changes, removed repeater rows and deliberately empty content are preserved. ACF Pro is required to edit repeaters and galleries.
+
+## Navigation menus
+
+On the first request after installing 2.1.4, the theme creates **BottomLine — Homepage** and **BottomLine — Inner pages** and assigns them to **Homepage navigation** and **Inner-page navigation**. Existing assignments are preserved. Edit links and order under Appearance → Menus; use Manage Locations to change assignments. Later requests preserve edits, deletions and intentionally unassigned locations. The header renders `wp_nav_menu()` with no hardcoded link fallback.
