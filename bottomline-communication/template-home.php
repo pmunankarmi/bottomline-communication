@@ -113,7 +113,7 @@ get_header();
 <?php foreach ( bl_content_posts( 'bl_service' ) as $service ) : ?>
       <div class="col-md-6 col-lg-4">
         <div class="service tilt">
-          <div class="service-img" style="background-image:url('<?php echo esc_url( bl_url( bl_value( 'service_image_url', '', $service->ID ) ) ); ?>')">
+          <div class="service-img" style="background-image:url('<?php echo esc_url( bl_media_url( 'service_image_url', $service->ID ) ); ?>')">
             <span class="service-img-tag"><?php echo esc_html( bl_value( 'service_tag', $service->post_title, $service->ID ) ); ?></span>
           </div>
           <div class="service-body">
@@ -146,7 +146,7 @@ get_header();
 
 <?php $home_work = bl_content_posts( 'bl_work', true ); ?>
 <?php foreach ( $home_work as $work ) : ?>
-      <div class="project-col"><article class="project" data-project="<?php echo esc_attr( $work->post_name ); ?>" style="--proj-img:url('<?php echo esc_url( bl_url( bl_value( 'work_cover', '', $work->ID ) ) ); ?>')">
+      <div class="project-col"><article class="project" data-project="<?php echo esc_attr( $work->post_name ); ?>" style="--proj-img:url('<?php echo esc_url( bl_media_url( 'work_cover', $work->ID ) ); ?>')">
         <span class="project-mark"><?php echo esc_html( bl_value( 'work_home_mark', '', $work->ID ) ); ?></span>
         <span class="project-tag"><?php echo esc_html( bl_value( 'work_category', '', $work->ID ) ); ?></span>
         <div><h3><?php echo esc_html( bl_value( 'work_home_title', $work->post_title, $work->ID ) ?: $work->post_title ); ?></h3>
@@ -246,7 +246,7 @@ get_header();
 <?php foreach ( bl_content_posts( 'bl_work', true ) as $work ) : ?>
 <aside class="project-panel" id="project-<?php echo esc_attr( $work->post_name ); ?>" aria-hidden="true" role="dialog" aria-modal="true" aria-label="<?php echo esc_attr( $work->post_title ); ?>" tabindex="-1">
   <button class="panel-close" aria-label="Close"><svg viewBox="0 0 24 24"><path d="M6 6 L18 18 M18 6 L6 18"/></svg></button>
-  <div class="panel-cover" style="background-image:url('<?php echo esc_url( bl_url( bl_value( 'work_cover', '', $work->ID ) ) ); ?>')"><span class="panel-cover-cat"><?php echo esc_html( bl_value( 'work_category', '', $work->ID ) ); ?></span></div>
+  <div class="panel-cover" style="background-image:url('<?php echo esc_url( bl_media_url( 'work_cover', $work->ID ) ); ?>')"><span class="panel-cover-cat"><?php echo esc_html( bl_value( 'work_category', '', $work->ID ) ); ?></span></div>
   <div class="panel-body">
     <h2 class="panel-title"><?php echo esc_html( $work->post_title ); ?></h2>
     <p class="panel-desc"><?php echo wp_kses( bl_value( 'work_home_description', '', $work->ID ) ? esc_html( bl_value( 'work_home_description', '', $work->ID ) ) : $work->post_content, array( 'strong' => array(), 'em' => array(), 'br' => array() ) ); ?></p>

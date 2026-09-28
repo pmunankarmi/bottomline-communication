@@ -35,10 +35,12 @@ function bl_migrate_sections() {
     require_once __DIR__ . '/section-defaults.php';
     $pages = get_posts( array( 'post_type' => 'page', 'post_status' => 'any', 'numberposts' => -1 ) );
     if ( ! $pages ) return;
+    $migrated = array();
     foreach ( $pages as $page ) {
         $kind = str_replace( array( 'template-', '.php' ), '', get_page_template_slug( $page->ID ) );
         if ( (int) get_option( 'page_on_front' ) === $page->ID ) $kind = 'home';
         if ( ! in_array( $kind, array( 'home', 'about', 'projects', 'clients', 'contact' ), true ) ) continue;
+        $migrated[$kind] = true;
         if ( 'about' === $kind && ! get_post_meta( $page->ID, '_bl_presence_editor', true ) ) {
             $heading = (string) get_post_meta( $page->ID, 'bl_presence_heading', true );
             if ( false === strpos( $heading, '<' ) ) {
@@ -64,6 +66,6 @@ function bl_migrate_sections() {
             update_post_meta( $page->ID, '_' . $name, 'field_' . $name );
         }
     }
-    update_option( 'bl_sections_migrated', 1, false );
+    if ( 5 === count( $migrated ) ) update_option( 'bl_sections_migrated', 1, false );
 }
 add_action( 'init', 'bl_migrate_sections', 30 );

@@ -2,7 +2,7 @@
 /** Native TinyMCE formats shared by the Classic Editor and ACF content editors. */
 defined( 'ABSPATH' ) || exit;
 add_action( 'after_setup_theme', function () {
-    add_editor_style( 'assets/css/editor.css' );
+    add_editor_style( 'style.css' );
 } );
 add_filter( 'mce_buttons_2', function ( $buttons ) {
     if ( ! in_array( 'styleselect', $buttons, true ) ) array_unshift( $buttons, 'styleselect' );

@@ -3,7 +3,7 @@
 defined( 'ABSPATH' ) || exit;
 function bl_logo_url() {
     $url = wp_get_attachment_image_url( (int) get_theme_mod( 'custom_logo' ), 'full' );
-    return $url ?: get_theme_file_uri( 'assets/bottomline-logo-white.svg' );
+    return $url ?: get_site_icon_url();
 }
 function bl_phone_url( $field, $default ) { return 'tel:' . preg_replace( '/[^0-9+]/', '', bl_value( $field, $default, 'option' ) ); }
 function bl_sync_logo_to_options( $old, $new ) {

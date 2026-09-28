@@ -6,10 +6,11 @@
         <img class="brand-logo" src="<?php echo esc_url( bl_logo_url() ); ?>" alt="<?php echo esc_attr( 'BottomLine' ); ?>" />
       </a>
       <p style="margin-top:24px"><?php echo esc_html( bl_value('bl_footer_description', 'Strategic concepts for evolving businesses, operating across the MENA region.', 'option') ); ?></p>
-      <?php if ( 'home' === bl_page_kind() ) : ?><div class="foot-socials">
-        <a href="<?php echo esc_url( bl_url( bl_value('bl_social_instagram', '#', 'option') ) ); ?>" aria-label="<?php echo esc_attr( 'Instagram' ); ?>"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
-        <a href="<?php echo esc_url( bl_url( bl_value('bl_social_linkedin', '#', 'option') ) ); ?>" aria-label="<?php echo esc_attr( 'LinkedIn' ); ?>"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
-        <a href="<?php echo esc_url( bl_url( bl_value('bl_social_x', '#', 'option') ) ); ?>" aria-label="<?php echo esc_attr( 'X' ); ?>"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+      <?php $socials = bl_social_links(); ?>
+      <?php if ( $socials ) : ?><div class="foot-socials">
+        <?php foreach ( $socials as $social ) : ?>
+          <a href="<?php echo esc_url( $social['url'] ); ?>" target="_blank" rel="noopener noreferrer" aria-label="<?php echo esc_attr( $social['label'] ); ?>"><?php echo $social['icon']; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Trusted theme SVG. ?></a>
+        <?php endforeach; ?>
       </div><?php endif; ?>
     </div>
     <div class="col-md-4 col-lg-2 foot-col">

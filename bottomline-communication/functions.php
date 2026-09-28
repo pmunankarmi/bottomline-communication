@@ -17,6 +17,8 @@ require_once get_template_directory() . '/inc/sections.php';
 require_once get_template_directory() . '/inc/section-fields.php';
 require_once get_template_directory() . '/inc/editor.php';
 require_once get_template_directory() . '/inc/menus.php';
+require_once get_template_directory() . '/inc/media.php';
+require_once get_template_directory() . '/inc/svg.php';
 
 /** PHP defaults are used until an editor explicitly saves a value, including blank. */
 function bl_value( $name, $default, $post_id = null ) {
@@ -50,6 +52,20 @@ function bl_page_kind() {
     return 'about';
 }
 function bl_asset_version( $file ) { return substr( hash_file( 'sha256', get_theme_file_path( $file ) ), 0, 12 ); }
+function bl_social_links() {
+    $icons = array(
+        'bl_social_instagram' => array( 'Instagram', '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>' ),
+        'bl_social_linkedin'  => array( 'LinkedIn', '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>' ),
+        'bl_social_x'         => array( 'X', '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>' ),
+    );
+    $links = array();
+    foreach ( $icons as $field => $details ) {
+        $url = trim( bl_value( $field, '', 'option' ) );
+        if ( '' === $url || '#' === $url ) continue;
+        $links[] = array( 'label' => $details[0], 'icon' => $details[1], 'url' => bl_url( $url ) );
+    }
+    return $links;
+}
 add_action( 'after_setup_theme', function () {
     add_theme_support( 'title-tag' );
     add_theme_support( 'custom-logo', array( 'flex-width' => true, 'flex-height' => true ) );
@@ -58,12 +74,13 @@ add_action( 'after_setup_theme', function () {
     add_theme_support( 'html5', array( 'search-form', 'comment-form', 'comment-list', 'gallery', 'caption', 'style', 'script' ) );
     load_theme_textdomain( 'bottomline', get_template_directory() . '/languages' );
 } );
+add_filter( 'body_class', function ( $classes ) {
+    $classes[] = 'bl-page-' . bl_page_kind();
+    return $classes;
+} );
 add_action( 'wp_enqueue_scripts', function () {
     $kind = bl_page_kind();
-    wp_enqueue_style( 'bl-bootstrap', get_theme_file_uri( 'assets/css/bootstrap.min.css' ), array(), '5.3.3' );
-    wp_enqueue_style( 'bl-fonts', 'https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap', array(), null );
-    wp_enqueue_style( 'bl-page', get_theme_file_uri( 'assets/css/' . $kind . '.css' ), array( 'bl-bootstrap', 'bl-fonts' ), bl_asset_version( 'assets/css/' . $kind . '.css' ) );
-    wp_enqueue_style( 'bl-theme', get_stylesheet_uri(), array( 'bl-page' ), bl_asset_version( 'style.css' ) );
+    wp_enqueue_style( 'bl-theme', get_stylesheet_uri(), array(), bl_asset_version( 'style.css' ) );
     if ( 'contact' === $kind ) {
         wp_enqueue_script( 'bl-jquery-validation', get_theme_file_uri( 'assets/js/jquery.validate.min.js' ), array( 'jquery' ), '1.21.0', true );
         wp_enqueue_script( 'bl-contact-validation', get_theme_file_uri( 'assets/js/contact-validation.js' ), array( 'bl-jquery-validation' ), bl_asset_version( 'assets/js/contact-validation.js' ), true );

@@ -608,17 +608,6 @@
     .panel-close{margin:16px 16px 0 0}
   }
 
-  /* Per-project gradient backgrounds */
-  .p-sab{--proj-img:url('../projects/sab-1.jpg')}
-  .p-go{--proj-img:url('../projects/go-telecom-1.jpg')}
-  .p-sme{--proj-img:url('../projects/sme-bank-1.jpg')}
-  .p-boston{--proj-img:url('../projects/boston-1.jpg')}
-  .p-sarcc{--proj-img:url('../projects/sarcc-1.jpg')}
-  .p-ufc{--proj-img:url('../projects/ufc-1.jpg')}
-  .p-cr7{--proj-img:url('../projects/cr7-1.jpg')}
-  .p-centrepoint{--proj-img:url('../projects/centrepoint-1.jpg')}
-  .p-mbsc{--proj-img:url('../projects/mbsc-1.jpg')}
-
   /* ============ PROCESS ============ */
   .process .container{max-width:1300px}
   .process-head{margin-bottom:70px}

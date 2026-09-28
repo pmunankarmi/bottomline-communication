@@ -33,9 +33,11 @@ function bl_import_content_run() {
         $slug = sanitize_title( $service['title'] );
         $existing = get_page_by_path( $slug, OBJECT, 'bl_service' );
         if ( $existing ) continue;
+        $image_id = bl_import_image( $service['image'], $service['title'] );
+        if ( ! $image_id ) return;
         $id = wp_insert_post( array( 'post_type' => 'bl_service', 'post_status' => 'publish', 'post_name' => $slug, 'post_title' => bl_legacy_value( 'bl_home_', $service['title'], $home_id ), 'post_excerpt' => bl_legacy_value( 'bl_home_', $service['description'], $home_id ), 'menu_order' => $order ), true );
         if ( is_wp_error( $id ) ) return;
-        bl_seed_meta( $id, array( 'service_tag' => bl_legacy_value( 'bl_home_', $service['tag'], $home_id ), 'service_image_url' => bl_legacy_value( 'bl_home_', $service['image'], $home_id ), 'service_disciplines' => implode( ' | ', array_map( function ( $text ) use ( $home_id ) { return bl_legacy_value( 'bl_home_', $text, $home_id ); }, $service['disciplines'] ) ) ) );
+        bl_seed_meta( $id, array( 'service_tag' => bl_legacy_value( 'bl_home_', $service['tag'], $home_id ), 'service_image_url' => $image_id, 'service_disciplines' => implode( ' | ', array_map( function ( $text ) use ( $home_id ) { return bl_legacy_value( 'bl_home_', $text, $home_id ); }, $service['disciplines'] ) ) ) );
     }
     foreach ( $defaults['work'] as $order => $work ) {
         $slug = $work['slug'];
@@ -47,7 +49,7 @@ function bl_import_content_run() {
         update_post_meta( $id, '_bl_import_pending', 1 );
         $meta = array(
             'work_category' => bl_legacy_value( $prefix, $work['cat'] ),
-            'work_cover' => bl_legacy_value( $prefix, $work['images'][0] ),
+            'work_cover' => 0,
             'work_gallery' => array(),
             'work_year' => bl_legacy_value( $prefix, $work['meta'][0] ?? '' ),
             'work_sector' => bl_legacy_value( $prefix, $work['meta'][1] ?? '' ),
@@ -67,6 +69,7 @@ function bl_import_content_run() {
             if ( ! $image_id ) return;
             $meta['work_gallery'][] = $image_id;
         }
+        $meta['work_cover'] = (int) $meta['work_gallery'][0];
         bl_seed_meta( $id, $meta );
         wp_set_object_terms( $id, $work['scope'], 'bl_work_scope' );
         wp_set_object_terms( $id, $work['filters'], 'bl_work_category' );
@@ -133,11 +136,17 @@ function bl_import_image( $asset, $alt ) {
     require_once ABSPATH . 'wp-admin/includes/image.php';
     $existing = get_posts( array( 'post_type' => 'attachment', 'post_status' => 'inherit', 'posts_per_page' => 1, 'meta_key' => '_bl_original_asset', 'meta_value' => $asset, 'fields' => 'ids' ) );
     if ( $existing ) return (int) $existing[0];
-    $file = get_theme_file_path( 'assets/' . $asset );
+    $file = bl_media_source_file( $asset );
     if ( ! is_file( $file ) ) return 0;
+    $is_svg = 'svg' === strtolower( pathinfo( $asset, PATHINFO_EXTENSION ) );
+    $allow_import_svg = function ( $mimes ) { $mimes['svg'] = 'image/svg+xml'; return $mimes; };
+    if ( $is_svg ) add_filter( 'upload_mimes', $allow_import_svg, 99 );
     $upload = wp_upload_bits( basename( $asset ), null, file_get_contents( $file ) );
+    if ( $is_svg ) remove_filter( 'upload_mimes', $allow_import_svg, 99 );
     if ( $upload['error'] ) return 0;
-    $id = wp_insert_attachment( array( 'post_mime_type' => wp_check_filetype( $upload['file'] )['type'], 'post_title' => $alt, 'post_status' => 'inherit' ), $upload['file'], 0, true );
+    $type = wp_check_filetype( $upload['file'] )['type'];
+    if ( $is_svg ) $type = 'image/svg+xml';
+    $id = wp_insert_attachment( array( 'post_mime_type' => $type, 'post_title' => $alt, 'post_status' => 'inherit' ), $upload['file'], 0, true );
     if ( is_wp_error( $id ) ) return 0;
     update_post_meta( $id, '_wp_attachment_image_alt', $alt );
     update_post_meta( $id, '_bl_original_asset', $asset );

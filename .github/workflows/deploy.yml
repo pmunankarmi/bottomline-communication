@@ -38,7 +38,8 @@ jobs:
             exit 0
           fi
           zip -qr bottomline-communication.zip bottomline-communication
-          gh release create "$tag" bottomline-communication.zip --target "$GITHUB_SHA" --title "BottomLine Communication $version" --notes "Installable WordPress theme. See the repository README for setup and update instructions."
+          zip -qr bottomline-media.zip media-library-source
+          gh release create "$tag" bottomline-communication.zip bottomline-media.zip --target "$GITHUB_SHA" --title "BottomLine Communication $version" --notes "Installable WordPress theme and its one-time Media Library import pack. See the repository README for setup and update instructions."
   deploy:
     if: github.event_name == 'push' && vars.WP_DEPLOY_ENABLED == 'true'
     needs: validate

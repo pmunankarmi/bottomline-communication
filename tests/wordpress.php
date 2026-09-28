@@ -25,6 +25,13 @@ if ( $existed ) update_field( 'field_' . $key, $before, $home->ID ); else { dele
 $global_fields = acf_get_fields( 'group_bl_globals' );
 check( array_column( array_filter( $global_fields, function ( $field ) { return 'tab' === $field['type']; } ), 'label' ) === array( 'Branding', 'Contact', 'Offices', 'Social Media', 'Footer', 'Form Delivery' ), 'Global settings have six organized tabs' );
 check( 'image' === acf_get_field( 'field_bl_logo' )['type'], 'Branding logo is an ACF image picker' );
+$service_image = get_post_meta( bl_content_posts( 'bl_service' )[0]->ID, 'service_image_url', true );
+check( ctype_digit( (string) $service_image ) && wp_attachment_is_image( (int) $service_image ), 'Service images use Media Library attachment IDs' );
+$work_cover = get_post_meta( bl_content_posts( 'bl_work' )[0]->ID, 'work_cover', true );
+check( ctype_digit( (string) $work_cover ) && wp_attachment_is_image( (int) $work_cover ), 'Work covers use Media Library attachment IDs' );
+check( false !== strpos( bl_media_url( 'work_cover', bl_content_posts( 'bl_work' )[0]->ID ), '/wp-content/uploads/' ), 'Work image URLs come from WordPress uploads' );
+$media_attachments = get_posts( array( 'post_type' => 'attachment', 'post_status' => 'inherit', 'posts_per_page' => -1, 'meta_key' => '_bl_original_asset', 'fields' => 'ids' ) );
+check( 88 === count( $media_attachments ), 'All supplied site images exist as Media Library attachments' );
 $old_logo = get_theme_mod( 'custom_logo' );
 $images = bl_client_gallery( bl_client_groups( 'home' )[0] );
 $legacy_logo = get_option( 'options_bl_logo_url', false );
@@ -43,20 +50,46 @@ check( (int) get_theme_mod( 'custom_logo' ) === $images[1], 'Theme option logo s
 $_POST['acf']['field_bl_logo'] = ''; update_option( 'options_bl_logo', '' ); do_action( 'acf/save_post', 'options' );
 check( ! get_theme_mod( 'custom_logo' ) && 0 === (int) get_option( 'options_bl_logo' ), 'Logo removal syncs in both places' );
 unset( $_POST['acf'] ); if ( $old_logo ) set_theme_mod( 'custom_logo', $old_logo );
+$social_before = array();
+foreach ( array( 'bl_social_instagram', 'bl_social_linkedin', 'bl_social_x' ) as $social_field ) {
+    $social_before[$social_field] = get_option( 'options_' . $social_field, false );
+    update_option( 'options_' . $social_field, '' );
+}
+check( array() === bl_social_links(), 'Blank social URLs hide every social icon' );
+update_option( 'options_bl_social_instagram', 'https://instagram.com/bottomline' );
+update_option( 'options_bl_social_linkedin', '#' );
+check( 1 === count( bl_social_links() ) && 'Instagram' === bl_social_links()[0]['label'], 'Only configured social URLs render' );
+foreach ( $social_before as $social_field => $social_value ) {
+    if ( false === $social_value ) delete_option( 'options_' . $social_field );
+    else update_option( 'options_' . $social_field, $social_value );
+}
+$admin = get_users( array( 'role' => 'administrator', 'number' => 1 ) )[0];
+wp_set_current_user( $admin->ID );
+check( 'image/svg+xml' === apply_filters( 'upload_mimes', array() )['svg'], 'Administrators can upload SVG files' );
+$safe_svg = tempnam( sys_get_temp_dir(), 'safe-svg-' ); file_put_contents( $safe_svg, '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10"><path d="M0 0h10v10z"/></svg>' );
+$unsafe_svg = tempnam( sys_get_temp_dir(), 'unsafe-svg-' ); file_put_contents( $unsafe_svg, '<svg xmlns="http://www.w3.org/2000/svg"><script>alert(1)</script></svg>' );
+$safe_result = apply_filters( 'wp_handle_upload_prefilter', array( 'name' => 'safe.svg', 'type' => 'image/svg+xml', 'tmp_name' => $safe_svg ) );
+$unsafe_result = apply_filters( 'wp_handle_upload_prefilter', array( 'name' => 'unsafe.svg', 'type' => 'image/svg+xml', 'tmp_name' => $unsafe_svg ) );
+check( empty( $safe_result['error'] ) && ! empty( $unsafe_result['error'] ), 'SVG validation accepts safe markup and rejects active content' );
+wp_delete_file( $safe_svg ); wp_delete_file( $unsafe_svg );
 $work = bl_content_posts( 'bl_work' )[0];
 check( bl_work_scope( $work->ID )[0] === 'Brand identity', 'Scope tag order preserved' );
 $old = bl_gallery_ids( 'work_gallery', $work->ID ); update_post_meta( $work->ID, 'work_gallery', array_reverse( $old ) );
 check( bl_gallery_ids( 'work_gallery', $work->ID ) === array_reverse( $old ), 'Gallery order is editable' ); update_post_meta( $work->ID, 'work_gallery', $old );
+update_option( 'options_bl_social_instagram', 'https://instagram.com/bottomline' );
 foreach ( array( 'home', 'about', 'projects', 'clients', 'contact' ) as $slug ) {
     $html = shell_exec( escapeshellarg( PHP_BINARY ) . ' -d error_reporting=22527 ' . escapeshellarg( __DIR__ . '/render.php' ) . ' ' . escapeshellarg( $slug ) );
     $dom = new DOMDocument(); @$dom->loadHTML( '<?xml encoding="utf-8" ?>' . $html ); $xp = new DOMXPath( $dom );
     check( $xp->query( '//nav[@id="nav"]' )->length === 1, "$slug: one standard shared header" );
     check( $xp->query( '//footer' )->length === 1, "$slug: one shared footer" );
+    check( $xp->query( '//footer//*[contains(concat(" ", normalize-space(@class), " "), " foot-socials ")]//a[@aria-label="Instagram"]' )->length === 1, "$slug: configured social icon in shared footer" );
     check( $xp->query( '//h1' )->length === 1, "$slug: server-rendered page title" );
     if ( 'projects' === $slug ) check( $xp->query( '//aside' )->length === 24 && $xp->query( '//*[@data-project]' )->length === 24, 'All cards and panels rendered by PHP' );
     if ( 'clients' === $slug ) check( $xp->query( '//div[@class="sector reveal"]' )->length === 10, 'Client sectors rendered from posts' );
     file_put_contents( sys_get_temp_dir() . '/bl-rendered-' . $slug . '.html', $html );
 }
+if ( false === $social_before['bl_social_instagram'] ) delete_option( 'options_bl_social_instagram' );
+else update_option( 'options_bl_social_instagram', $social_before['bl_social_instagram'] );
 check( "'=SUM(1,2)" === bl_csv_cell( '=SUM(1,2)' ) && "' +CMD()" === bl_csv_cell( ' +CMD()' ), 'CSV formula injection blocked' );
 check( ! get_post_type_object( 'bl_submission' )->publicly_queryable && ! get_post_type_object( 'bl_submission' )->show_in_rest, 'Submissions are private' );
 $counts = array_map( function ( $type ) { return count( bl_content_posts( $type ) ); }, array( 'bl_service', 'bl_work', 'bl_client' ) );

@@ -23,7 +23,7 @@ For a client sector, set **Display on** to `clients`, `home` or `both`. The orig
 
 For homepage Work cards, enter a positive **Homepage order**; leave it blank to omit the project. Use `wide` for a wide card. Native **Order** controls Services, Work listing and Clients sector ordering. Work homepage title/summary overrides are optional; the normal title and excerpt are used when blank. The category label preserves the source's display wording, while Work Categories controls filtering.
 
-Global settings are grouped into **Branding, Contact, Offices, Social Media, Footer, and Form Delivery** tabs. The **Branding → Logo** image picker uploads or selects a Media Library image and shares WordPress's native `custom_logo` attachment. Changing or clearing either setting updates the other. With no custom logo, the original bundled logo is used in the header, footer and preloader.
+Global settings are grouped into **Branding, Contact, Offices, Social Media, Footer, and Form Delivery** tabs. The **Branding → Logo** image picker uploads or selects a Media Library image and shares WordPress's native `custom_logo` attachment. Changing or clearing either setting updates the other. Social icons use the shared footer on every page, and each icon is omitted when its URL is empty.
 
 ## Theme structure
 
@@ -35,6 +35,8 @@ Global settings are grouped into **Branding, Contact, Offices, Social Media, Foo
 - `inc/content-types.php`: Services, Work, Clients, taxonomies and their ACF fields.
 - `inc/acf-fields.php` and `inc/section-fields.php`: page labels, section editors and repeaters.
 - `inc/global-settings.php` and `inc/logo.php`: global settings and logo synchronization.
+- `inc/media.php`: Media Library URL resolution and migration from earlier theme asset paths.
+- `inc/svg.php`: administrator-only SVG upload support with active-content checks.
 - `inc/contact.php` and `inc/submissions.php`: form handling, private storage and CSV export.
 - `inc/default-content.php`, `inc/default-clients.php`, `inc/migrate.php`, `inc/legacy-fields.php`: one-time original-content import and preservation of previous field edits.
 - `screenshot.png`: the actual homepage screenshot for Appearance → Themes.
@@ -46,13 +48,15 @@ There are no `content-home.php`, navigation template parts or nested template-pa
 1. Install and activate your licensed **ACF Pro** plugin; it is not bundled.
 2. Upload the theme ZIP through **Appearance → Themes**, or deploy the `bottomline-communication` folder into `wp-content/themes/`.
 3. Activate the theme. Missing standard pages and page-template assignments are created; existing page content and existing homepage settings are not overwritten.
-4. On the first request, the theme imports the original 6 Services, 24 Work posts, 10 client sectors, Homepage logos, categories, scope tags and bundled gallery images. The uploads directory must be writable. Subsequent deployments do not overwrite these posts, recreate deliberately deleted content or reorder editor changes. Previous text-field edits are retained where they map to the new fields.
+4. On the first request, the theme imports the original 6 Services, 24 Work posts, 10 client sectors, Homepage logos, categories and scope tags. It downloads the matching `bottomline-media.zip` release pack once and creates normal WordPress Media Library attachments in `wp-content/uploads`; the uploads directory and WordPress temporary directory must be writable. A failed download remains pending and retries on a later request. Subsequent deployments do not overwrite these posts, recreate deliberately deleted content or reorder editor changes. Previous text-field edits are retained where they map to the new fields.
 5. If matching pages already existed, assign their matching **BottomLine** templates. Set the intended homepage in **Settings → Reading**.
 6. Set the notification recipient under **BottomLine** and configure the host's WordPress mail/SMTP service.
 
 The form uses bundled **jQuery Validation** and independent server-side checks. Valid briefs are saved privately before the email notification is attempted. A failed notification remains visible in Form Submissions, and the visitor receives a receipt because the brief is stored. CSV export requires an administrator login and a valid nonce, and neutralizes spreadsheet formulas.
 
-ACF Pro is required for the gallery editing interface and options page. Front-end gallery rendering uses stored attachment IDs and continues to work if ACF is temporarily inactive. Saved admin values override PHP fallback text. Old `.html` URLs redirect through WordPress; remove or redirect any physical static HTML files on the host so requests reach WordPress.
+ACF Pro is required for the gallery editing interface and options page. Front-end gallery rendering uses stored attachment IDs and continues to work if ACF is temporarily inactive. Administrators can upload validated SVG files through the normal Media Library; other roles cannot upload SVG. Saved admin values override PHP fallback text. Old `.html` URLs redirect through WordPress; remove or redirect any physical static HTML files on the host so requests reach WordPress.
+
+The distributable theme contains one public stylesheet, `style.css`. Page-specific source files live in the repository-only `css-source` directory and are compiled with `php tools/build-css.php`. Content images and logos are not stored in the theme directory. `screenshot.png` remains because WordPress uses it as the required Appearance → Themes preview.
 
 ## Automatic deployment after Git pushes
 
@@ -82,6 +86,7 @@ Live deployment has not been enabled or tested: hosting details and secrets were
 ## Validation
 
 ```sh
+php tools/build-css.php
 find bottomline-communication -name '*.php' -exec php -l {} \;
 for file in bottomline-communication/assets/js/*.js; do node --check "$file"; done
 python3 tests/check-theme.py
