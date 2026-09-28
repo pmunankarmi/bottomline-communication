@@ -84,7 +84,7 @@ foreach ( array( 'home', 'about', 'projects', 'clients', 'contact' ) as $slug ) 
     $html = shell_exec( escapeshellarg( PHP_BINARY ) . ' -d error_reporting=22527 ' . escapeshellarg( __DIR__ . '/render.php' ) . ' ' . escapeshellarg( $slug ) );
     $dom = new DOMDocument(); @$dom->loadHTML( '<?xml encoding="utf-8" ?>' . $html ); $xp = new DOMXPath( $dom );
     check( $xp->query( '//nav[@id="nav"]' )->length === 1, "$slug: one standard shared header" );
-    check( $xp->query( '//footer' )->length === 1, "$slug: one shared footer" );
+    check( $xp->query( '//footer[contains(concat(" ", normalize-space(@class), " "), " site-footer ")]' )->length === 1, "$slug: one shared homepage-style footer" );
     check( $xp->query( '//footer//*[contains(concat(" ", normalize-space(@class), " "), " foot-socials ")]//a[@aria-label="Instagram"]' )->length === 1, "$slug: configured social icon in shared footer" );
     check( $xp->query( '//h1' )->length === 1, "$slug: server-rendered page title" );
     check( $xp->query( '//a[contains(translate(@href, "HTML", "html"), ".html")]' )->length === 0, "$slug: no static document links" );

@@ -721,23 +721,6 @@
     position:relative;box-shadow:0 10px 30px rgba(66,0,105,.2);
   }
 
-  /* ============ FOOTER ============ */
-  footer{background:var(--purple-950);color:#fff;padding:100px 5vw 40px}
-  .foot-grid{margin-bottom:80px}
-  .foot-brand .logo{margin-bottom:24px}
-  .foot-brand .logo-text strong{color:#fff}
-  .foot-brand .logo-text small{color:var(--teal-light)}
-  .foot-brand p{color:rgba(255,255,255,.6);max-width:320px;font-size:.94rem;line-height:1.6;margin-bottom:24px}
-  .foot-col h5{font-size:.78rem;letter-spacing:3px;text-transform:uppercase;color:var(--teal);margin-bottom:22px;font-weight:600}
-  .foot-col p,.foot-col a{color:rgba(255,255,255,.7);font-size:.93rem;display:block;margin-bottom:10px;text-decoration:none;line-height:1.55}
-  .foot-col a:hover{color:#fff}
-  .foot-col strong{color:#fff;font-weight:500;display:block;margin-bottom:6px}
-  .foot-bottom{
-    padding-top:32px;border-top:1px solid rgba(255,255,255,.1);
-    display:flex;justify-content:space-between;align-items:center;
-    flex-wrap:wrap;gap:16px;color:rgba(255,255,255,.5);font-size:.85rem;
-  }
-
   /* ============ FLOATING CONTACT ============ */
   .floating-contact{
     position:fixed;bottom:24px;right:24px;z-index:99;
@@ -782,7 +765,6 @@
     .step-desc{grid-column:1/-1}
     .services-grid.row{grid-template-columns:1fr 1fr}
     .clients-grid{grid-template-columns:repeat(3,1fr)}
-    .foot-grid{grid-template-columns:1fr 1fr;gap:40px}
     .hero-stats{grid-template-columns:1fr 1fr;gap:24px}
     .hero-stat{padding:20px 0;border-right:none;border-top:1px solid rgba(255,255,255,.12)}
     .hero-stat:nth-child(-n+2){border-top:none}
@@ -794,7 +776,6 @@
     .projects-grid{grid-template-columns:1fr}
 
     .clients-grid{grid-template-columns:1fr 1fr}
-    .foot-grid{grid-template-columns:1fr}
     .hero-stats{grid-template-columns:1fr 1fr}
     .step-num{font-size:2.2rem}
     .step-title{font-size:1.3rem}

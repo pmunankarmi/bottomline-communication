@@ -48,7 +48,7 @@ function bl_css_scope( $css, $scope ) {
     return $output;
 }
 
-$header = "/*\nTheme Name: BottomLine Communication\nTheme URI: https://github.com/pmunankarmi/bottomline-communication\nAuthor: BottomLine Communication\nDescription: Faithful classic WordPress conversion of the supplied BottomLine HTML. Native content types, classic templates and ACF Pro fields.\nVersion: 2.2.3\nUpdate URI: https://github.com/pmunankarmi/bottomline-communication\nRequires at least: 6.4\nRequires PHP: 7.4\nText Domain: bottomline\n*/\n";
+$header = "/*\nTheme Name: BottomLine Communication\nTheme URI: https://github.com/pmunankarmi/bottomline-communication\nAuthor: BottomLine Communication\nDescription: Faithful classic WordPress conversion of the supplied BottomLine HTML. Native content types, classic templates and ACF Pro fields.\nVersion: 2.2.4\nUpdate URI: https://github.com/pmunankarmi/bottomline-communication\nRequires at least: 6.4\nRequires PHP: 7.4\nText Domain: bottomline\n*/\n";
 $css = "@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');\n";
 $css .= file_get_contents( $root . '/css-source/bootstrap.min.css' ) . "\n";
 foreach ( array( 'home', 'about', 'projects', 'clients', 'contact' ) as $kind ) {

@@ -1,5 +1,5 @@
 <?php defined( 'ABSPATH' ) || exit; ?>
-<footer>
+<footer class="site-footer">
   <div class="foot-grid row g-5">
     <div class="col-lg-5 foot-brand">
       <a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="logo">

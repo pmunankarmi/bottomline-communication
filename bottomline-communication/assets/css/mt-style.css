@@ -689,22 +689,6 @@ body.bl-page-home .client-cell:hover{
     background:var(--purple-800);color:#fff;transform:scale(1.02);z-index:2;
     position:relative;box-shadow:0 10px 30px rgba(66,0,105,.2);
   }
-body.bl-page-home /* ============ FOOTER ============ */
-  footer{background:var(--purple-950);color:#fff;padding:100px 5vw 40px}
-body.bl-page-home .foot-grid{margin-bottom:80px}
-body.bl-page-home .foot-brand .logo{margin-bottom:24px}
-body.bl-page-home .foot-brand .logo-text strong{color:#fff}
-body.bl-page-home .foot-brand .logo-text small{color:var(--teal-light)}
-body.bl-page-home .foot-brand p{color:rgba(255,255,255,.6);max-width:320px;font-size:.94rem;line-height:1.6;margin-bottom:24px}
-body.bl-page-home .foot-col h5{font-size:.78rem;letter-spacing:3px;text-transform:uppercase;color:var(--teal);margin-bottom:22px;font-weight:600}
-body.bl-page-home .foot-col p,body.bl-page-home .foot-col a{color:rgba(255,255,255,.7);font-size:.93rem;display:block;margin-bottom:10px;text-decoration:none;line-height:1.55}
-body.bl-page-home .foot-col a:hover{color:#fff}
-body.bl-page-home .foot-col strong{color:#fff;font-weight:500;display:block;margin-bottom:6px}
-body.bl-page-home .foot-bottom{
-    padding-top:32px;border-top:1px solid rgba(255,255,255,.1);
-    display:flex;justify-content:space-between;align-items:center;
-    flex-wrap:wrap;gap:16px;color:rgba(255,255,255,.5);font-size:.85rem;
-  }
 body.bl-page-home /* ============ FLOATING CONTACT ============ */
   .floating-contact{
     position:fixed;bottom:24px;right:24px;z-index:99;
@@ -748,7 +732,6 @@ body.bl-page-home .process-progress{left:30px}
 body.bl-page-home .step-desc{grid-column:1/-1}
 body.bl-page-home .services-grid.row{grid-template-columns:1fr 1fr}
 body.bl-page-home .clients-grid{grid-template-columns:repeat(3,1fr)}
-body.bl-page-home .foot-grid{grid-template-columns:1fr 1fr;gap:40px}
 body.bl-page-home .hero-stats{grid-template-columns:1fr 1fr;gap:24px}
 body.bl-page-home .hero-stat{padding:20px 0;border-right:none;border-top:1px solid rgba(255,255,255,.12)}
 body.bl-page-home .hero-stat:nth-child(-n+2){border-top:none}
@@ -759,7 +742,6 @@ body.bl-page-home section{padding:90px 5vw}
 body.bl-page-home .services-grid.row{grid-template-columns:1fr}
 body.bl-page-home .projects-grid{grid-template-columns:1fr}
 body.bl-page-home .clients-grid{grid-template-columns:1fr 1fr}
-body.bl-page-home .foot-grid{grid-template-columns:1fr}
 body.bl-page-home .hero-stats{grid-template-columns:1fr 1fr}
 body.bl-page-home .step-num{font-size:2.2rem}
 body.bl-page-home .step-title{font-size:1.3rem}
@@ -946,16 +928,6 @@ body.bl-page-about .cta-banner p{font-size:1.1rem;opacity:.75;margin-bottom:36px
 body.bl-page-about .btn{padding:16px 32px;border-radius:32px;text-decoration:none;font-weight:600;font-size:.95rem;display:inline-flex;align-items:center;gap:10px;transition:all .3s ease;cursor:pointer;border:none;position:relative;z-index:2}
 body.bl-page-about .btn-primary{background:var(--teal);color:var(--purple-900)}
 body.bl-page-about .btn-primary:hover{background:#fff;transform:translateY(-2px);box-shadow:0 14px 30px rgba(77,207,204,.35)}
-body.bl-page-about /* Footer */
-  footer{background:var(--purple-950);color:#fff;padding:80px 5vw 40px}
-body.bl-page-about .foot-grid{margin-bottom:60px;max-width:1300px;margin-left:auto;margin-right:auto}
-body.bl-page-about .foot-brand .logo{margin-bottom:24px}
-body.bl-page-about .foot-brand p{color:rgba(255,255,255,.6);max-width:320px;font-size:.94rem;line-height:1.6}
-body.bl-page-about .foot-col h5{font-size:.78rem;letter-spacing:3px;text-transform:uppercase;color:var(--teal);margin-bottom:22px;font-weight:600}
-body.bl-page-about .foot-col p,body.bl-page-about .foot-col a{color:rgba(255,255,255,.7);font-size:.93rem;display:block;margin-bottom:10px;text-decoration:none;line-height:1.55}
-body.bl-page-about .foot-col a:hover{color:#fff}
-body.bl-page-about .foot-col strong{color:#fff;font-weight:500;display:block;margin-bottom:6px}
-body.bl-page-about .foot-bottom{padding-top:32px;border-top:1px solid rgba(255,255,255,.1);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;color:rgba(255,255,255,.5);font-size:.85rem;max-width:1300px;margin:0 auto}
 body.bl-page-about /* Reveal */
   .reveal{opacity:0;transform:translateY(24px);transition:all .8s cubic-bezier(.2,.7,.2,1)}
 body.bl-page-about .reveal.in{opacity:1;transform:translateY(0)}
@@ -973,12 +945,10 @@ body.bl-page-about .menu-btn{display:block}
 body.bl-page-about .story-grid,body.bl-page-about .team-head{grid-template-columns:1fr;gap:40px}
 body.bl-page-about .pillars-grid,body.bl-page-about .team-grid,body.bl-page-about .offices-grid{grid-template-columns:1fr 1fr}
 body.bl-page-about .skills-grid{grid-template-columns:1fr 1fr}
-body.bl-page-about .foot-grid{grid-template-columns:1fr 1fr;gap:40px}
 body.bl-page-about section{padding:80px 5vw}
   }
   @media (max-width:600px){
 body.bl-page-about .pillars-grid,body.bl-page-about .team-grid,body.bl-page-about .offices-grid,body.bl-page-about .skills-grid{grid-template-columns:1fr}
-body.bl-page-about .foot-grid{grid-template-columns:1fr}
   }
 
 /* Projects */
@@ -1212,16 +1182,6 @@ body.bl-page-projects .btn-primary{background:var(--teal);color:var(--purple-900
 body.bl-page-projects .btn-primary:hover{background:#fff;transform:translateY(-2px);box-shadow:0 14px 30px rgba(77,207,204,.35)}
 body.bl-page-projects .btn-ghost{background:transparent;color:#fff;border:1.5px solid rgba(255,255,255,.25)}
 body.bl-page-projects .btn-ghost:hover{border-color:var(--teal);color:var(--teal)}
-body.bl-page-projects /* Footer */
-  footer{background:var(--purple-950);color:#fff;padding:100px 5vw 40px}
-body.bl-page-projects .foot-grid{margin-bottom:80px}
-body.bl-page-projects .foot-brand .logo{margin-bottom:24px}
-body.bl-page-projects .foot-brand p{color:rgba(255,255,255,.6);max-width:320px;font-size:.94rem;line-height:1.6}
-body.bl-page-projects .foot-col h5{font-size:.78rem;letter-spacing:3px;text-transform:uppercase;color:var(--teal);margin-bottom:22px;font-weight:600}
-body.bl-page-projects .foot-col p,body.bl-page-projects .foot-col a{color:rgba(255,255,255,.7);font-size:.93rem;display:block;margin-bottom:10px;text-decoration:none;line-height:1.55}
-body.bl-page-projects .foot-col a:hover{color:#fff}
-body.bl-page-projects .foot-col strong{color:#fff;font-weight:500;display:block;margin-bottom:6px}
-body.bl-page-projects .foot-bottom{padding-top:32px;border-top:1px solid rgba(255,255,255,.1);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;color:rgba(255,255,255,.5);font-size:.85rem}
 body.bl-page-projects /* Floating contact */
   .floating-contact{position:fixed;bottom:24px;right:24px;z-index:99;display:flex;flex-direction:column;gap:12px}
 body.bl-page-projects .fc-btn{width:54px;height:54px;border-radius:50%;display:grid;place-items:center;text-decoration:none;color:#fff;box-shadow:0 8px 24px rgba(0,0,0,.18);transition:all .3s;position:relative}
@@ -1235,11 +1195,9 @@ body.bl-page-projects .nav-links{display:none}
 body.bl-page-projects .menu-btn{display:block}
 body.bl-page-projects .nav-phone{display:none}
 body.bl-page-projects .projects-listing{grid-template-columns:1fr 1fr}
-body.bl-page-projects .foot-grid{grid-template-columns:1fr 1fr;gap:40px}
   }
   @media (max-width:600px){
 body.bl-page-projects .projects-listing{grid-template-columns:1fr}
-body.bl-page-projects .foot-grid{grid-template-columns:1fr}
 body.bl-page-projects .panel-body{padding:30px 24px 50px}
 body.bl-page-projects .project-panel{width:100vw}
 body.bl-page-projects .floating-contact{bottom:16px;right:16px}
@@ -1383,16 +1341,6 @@ body.bl-page-clients .cta-banner p{font-size:1.1rem;opacity:.75;margin-bottom:36
 body.bl-page-clients .btn{padding:16px 32px;border-radius:32px;text-decoration:none;font-weight:600;font-size:.95rem;display:inline-flex;align-items:center;gap:10px;transition:all .3s ease;cursor:pointer;border:none;position:relative;z-index:2}
 body.bl-page-clients .btn-primary{background:var(--teal);color:var(--purple-900)}
 body.bl-page-clients .btn-primary:hover{background:#fff;transform:translateY(-2px);box-shadow:0 14px 30px rgba(77,207,204,.35)}
-body.bl-page-clients /* Footer */
-  footer{background:var(--purple-950);color:#fff;padding:80px 5vw 40px}
-body.bl-page-clients .foot-grid{margin-bottom:60px;max-width:1300px;margin-left:auto;margin-right:auto}
-body.bl-page-clients .foot-brand .logo{margin-bottom:24px}
-body.bl-page-clients .foot-brand p{color:rgba(255,255,255,.6);max-width:320px;font-size:.94rem;line-height:1.6}
-body.bl-page-clients .foot-col h5{font-size:.78rem;letter-spacing:3px;text-transform:uppercase;color:var(--teal);margin-bottom:22px;font-weight:600}
-body.bl-page-clients .foot-col p,body.bl-page-clients .foot-col a{color:rgba(255,255,255,.7);font-size:.93rem;display:block;margin-bottom:10px;text-decoration:none;line-height:1.55}
-body.bl-page-clients .foot-col a:hover{color:#fff}
-body.bl-page-clients .foot-col strong{color:#fff;font-weight:500;display:block;margin-bottom:6px}
-body.bl-page-clients .foot-bottom{padding-top:32px;border-top:1px solid rgba(255,255,255,.1);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;color:rgba(255,255,255,.5);font-size:.85rem;max-width:1300px;margin:0 auto}
 body.bl-page-clients /* Reveal */
   .reveal{opacity:0;transform:translateY(24px);transition:all .8s cubic-bezier(.2,.7,.2,1)}
 body.bl-page-clients .reveal.in{opacity:1;transform:translateY(0)}
@@ -1408,11 +1356,9 @@ body.bl-page-clients .fc-btn svg{width:24px;height:24px}
 body.bl-page-clients .nav-links{display:none}
 body.bl-page-clients .menu-btn{display:block}
 body.bl-page-clients .sector-grid{grid-template-columns:repeat(3,1fr)}
-body.bl-page-clients .foot-grid{grid-template-columns:1fr 1fr;gap:40px}
   }
   @media (max-width:600px){
 body.bl-page-clients .sector-grid{grid-template-columns:1fr 1fr}
-body.bl-page-clients .foot-grid{grid-template-columns:1fr}
   }
 
 /* Contact */
@@ -1602,16 +1548,6 @@ body.bl-page-contact .success-mark{
     display:grid;place-items:center;margin:0 auto 24px;
     font-size:2rem;
   }
-body.bl-page-contact /* Footer */
-  footer{background:var(--purple-950);color:#fff;padding:80px 5vw 40px;margin-top:60px}
-body.bl-page-contact .foot-grid{margin-bottom:60px;max-width:1300px;margin-left:auto;margin-right:auto}
-body.bl-page-contact .foot-brand .logo{margin-bottom:24px}
-body.bl-page-contact .foot-brand p{color:rgba(255,255,255,.6);max-width:320px;font-size:.94rem;line-height:1.6}
-body.bl-page-contact .foot-col h5{font-size:.78rem;letter-spacing:3px;text-transform:uppercase;color:var(--teal);margin-bottom:22px;font-weight:600}
-body.bl-page-contact .foot-col p,body.bl-page-contact .foot-col a{color:rgba(255,255,255,.7);font-size:.93rem;display:block;margin-bottom:10px;text-decoration:none;line-height:1.55}
-body.bl-page-contact .foot-col a:hover{color:#fff}
-body.bl-page-contact .foot-col strong{color:#fff;font-weight:500;display:block;margin-bottom:6px}
-body.bl-page-contact .foot-bottom{padding-top:32px;border-top:1px solid rgba(255,255,255,.1);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;color:rgba(255,255,255,.5);font-size:.85rem;max-width:1300px;margin:0 auto}
 body.bl-page-contact /* Floating contact */
   .floating-contact{position:fixed;bottom:24px;right:24px;z-index:99;display:flex;flex-direction:column;gap:12px}
 body.bl-page-contact .fc-btn{width:54px;height:54px;border-radius:50%;display:grid;place-items:center;text-decoration:none;color:#fff;box-shadow:0 8px 24px rgba(0,0,0,.18);transition:all .3s;position:relative}
@@ -1627,12 +1563,10 @@ body.bl-page-contact .contact-grid{grid-template-columns:1fr;gap:40px}
 body.bl-page-contact .form-row{grid-template-columns:1fr}
 body.bl-page-contact .budget-grid.row{grid-template-columns:1fr 1fr}
 body.bl-page-contact .service-checks.row{grid-template-columns:1fr}
-body.bl-page-contact .foot-grid{grid-template-columns:1fr 1fr;gap:40px}
   }
   @media (max-width:600px){
 body.bl-page-contact .form-card{padding:32px 24px}
 body.bl-page-contact .budget-grid.row{grid-template-columns:1fr 1fr;gap:10px}
-body.bl-page-contact .foot-grid{grid-template-columns:1fr}
   }
 
 /* Classic/ACF editor */
@@ -1661,6 +1595,17 @@ body.bl-page-contact .foot-grid{grid-template-columns:1fr}
 input[aria-invalid="true"],textarea[aria-invalid="true"]{border-color:#b32d2e!important}
 .client-cell img,.c-cell img{height:auto}
 
+/* One shared footer, matching the homepage, for every page template. */
+html body .site-footer{background:var(--purple-950,#1f0036);color:#fff;padding:100px 5vw 40px;margin-top:0}
+html body .site-footer .foot-grid{margin:0 0 80px;max-width:none}
+html body .site-footer .foot-brand .logo{margin-bottom:24px}
+html body .site-footer .foot-brand p{color:rgba(255,255,255,.6);max-width:320px;font-size:.94rem;line-height:1.6;margin-bottom:24px}
+html body .site-footer .foot-col h5{font-size:.78rem;letter-spacing:3px;text-transform:uppercase;color:var(--teal,#4dcfcc);margin-bottom:22px;font-weight:600}
+html body .site-footer .foot-col p,html body .site-footer .foot-col a{color:rgba(255,255,255,.7);font-size:.93rem;display:block;margin-bottom:10px;text-decoration:none;line-height:1.55}
+html body .site-footer .foot-col a:hover{color:#fff}
+html body .site-footer .foot-col strong{color:#fff;font-weight:500;display:block;margin-bottom:6px}
+html body .site-footer .foot-bottom{padding-top:32px;border-top:1px solid rgba(255,255,255,.1);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;color:rgba(255,255,255,.5);font-size:.85rem;max-width:none;margin:0}
+
 /* Shared footer social buttons appear consistently on every page. */
 .foot-socials{display:flex;align-items:center;flex-wrap:wrap;gap:10px;margin-top:24px}
 .foot-socials a{
@@ -1670,6 +1615,12 @@ input[aria-invalid="true"],textarea[aria-invalid="true"]{border-color:#b32d2e!im
 .foot-socials a:hover{background:var(--teal,#4dcfcc);border-color:var(--teal,#4dcfcc);color:var(--purple-900,#330057);transform:translateY(-2px)}
 .foot-socials a:focus-visible{outline:3px solid rgba(77,207,204,.45);outline-offset:3px}
 .foot-socials svg{display:block;width:17px;height:17px}
+
+@media(max-width:1024px){html body .site-footer .foot-grid{margin-bottom:60px}}
+@media(max-width:600px){
+  html body .site-footer{padding-top:80px}
+  html body .site-footer .foot-bottom{align-items:flex-start;flex-direction:column}
+}
 
 /* Rich section editors use native bold formatting for the existing accent color. */
 .section-title strong{font-weight:inherit;color:var(--purple-800)}

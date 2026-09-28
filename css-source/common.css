@@ -10,6 +10,17 @@
 input[aria-invalid="true"],textarea[aria-invalid="true"]{border-color:#b32d2e!important}
 .client-cell img,.c-cell img{height:auto}
 
+/* One shared footer, matching the homepage, for every page template. */
+html body .site-footer{background:var(--purple-950,#1f0036);color:#fff;padding:100px 5vw 40px;margin-top:0}
+html body .site-footer .foot-grid{margin:0 0 80px;max-width:none}
+html body .site-footer .foot-brand .logo{margin-bottom:24px}
+html body .site-footer .foot-brand p{color:rgba(255,255,255,.6);max-width:320px;font-size:.94rem;line-height:1.6;margin-bottom:24px}
+html body .site-footer .foot-col h5{font-size:.78rem;letter-spacing:3px;text-transform:uppercase;color:var(--teal,#4dcfcc);margin-bottom:22px;font-weight:600}
+html body .site-footer .foot-col p,html body .site-footer .foot-col a{color:rgba(255,255,255,.7);font-size:.93rem;display:block;margin-bottom:10px;text-decoration:none;line-height:1.55}
+html body .site-footer .foot-col a:hover{color:#fff}
+html body .site-footer .foot-col strong{color:#fff;font-weight:500;display:block;margin-bottom:6px}
+html body .site-footer .foot-bottom{padding-top:32px;border-top:1px solid rgba(255,255,255,.1);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;color:rgba(255,255,255,.5);font-size:.85rem;max-width:none;margin:0}
+
 /* Shared footer social buttons appear consistently on every page. */
 .foot-socials{display:flex;align-items:center;flex-wrap:wrap;gap:10px;margin-top:24px}
 .foot-socials a{
@@ -19,6 +30,12 @@ input[aria-invalid="true"],textarea[aria-invalid="true"]{border-color:#b32d2e!im
 .foot-socials a:hover{background:var(--teal,#4dcfcc);border-color:var(--teal,#4dcfcc);color:var(--purple-900,#330057);transform:translateY(-2px)}
 .foot-socials a:focus-visible{outline:3px solid rgba(77,207,204,.45);outline-offset:3px}
 .foot-socials svg{display:block;width:17px;height:17px}
+
+@media(max-width:1024px){html body .site-footer .foot-grid{margin-bottom:60px}}
+@media(max-width:600px){
+  html body .site-footer{padding-top:80px}
+  html body .site-footer .foot-bottom{align-items:flex-start;flex-direction:column}
+}
 
 /* Rich section editors use native bold formatting for the existing accent color. */
 .section-title strong{font-weight:inherit;color:var(--purple-800)}

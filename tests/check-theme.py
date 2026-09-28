@@ -49,6 +49,8 @@ assert 'grid-template-columns:repeat(2,minmax(0,1fr));gap:10px 12px' in combined
 assert 'grid-template-columns:repeat(4,minmax(0,1fr));gap:14px' in combined_css, 'Contact budget choices have equal gaps'
 assert 'grid-template-columns:repeat(3,minmax(0,1fr));gap:24px' in combined_css, 'Homepage service cards have equal row and column gaps'
 assert '.foot-socials a{' in combined_css and '.foot-socials svg{' in combined_css, 'Social buttons are styled globally'
+assert '<footer class="site-footer">' in (root / 'footer.php').read_text(), 'All pages use the shared site footer'
+assert 'html body .site-footer{background:' in combined_css and 'padding:100px 5vw 40px;margin-top:0' in combined_css, 'Shared footer matches homepage spacing'
 assert (root / 'screenshot.png').is_file()
 assert 'bl_work_category' in php and 'bl_work_scope' in php
 assert 'bl_export_submissions' in php
