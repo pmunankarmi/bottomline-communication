@@ -254,7 +254,7 @@ get_header();
     <div class="panel-gallery"><h4>Gallery</h4><div class="panel-gallery-grid">
       <?php foreach ( bl_gallery_ids( 'work_gallery', $work->ID ) as $image_id ) : ?><img src="<?php echo esc_url( wp_get_attachment_image_url( $image_id, 'full' ) ); ?>" alt="<?php echo esc_attr( $work->post_title ); ?>" loading="lazy" /><?php endforeach; ?>
     </div></div>
-    <div class="panel-footer"><p>Working on something similar?</p><a href="<?php echo esc_url( bl_url( 'contact.html' ) ); ?>" class="btn btn-primary">Start a project →</a></div>
+    <div class="panel-footer"><p>Working on something similar?</p><a href="<?php echo esc_url( bl_url( 'contact' ) ); ?>" class="btn btn-primary">Start a project →</a></div>
   </div>
 </aside>
 <?php endforeach; ?>

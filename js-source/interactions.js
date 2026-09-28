@@ -8,6 +8,21 @@
     menu.addEventListener('click', () => menu.setAttribute('aria-expanded', String(nav.classList.toggle('mobile-open'))));
     nav.querySelectorAll('a').forEach(link => link.addEventListener('click', () => { nav.classList.remove('mobile-open'); menu.setAttribute('aria-expanded', 'false'); }));
   }
+
+  // Keep WordPress menu anchors reliable after the intro and fixed header load.
+  document.querySelectorAll('a[href*="#"]').forEach(link => {
+    link.addEventListener('click', event => {
+      let destination;
+      try { destination = new URL(link.href, window.location.href); } catch (error) { return; }
+      if (!destination.hash || destination.origin !== window.location.origin || destination.pathname !== window.location.pathname) return;
+      const id = decodeURIComponent(destination.hash.slice(1));
+      const target = id ? document.getElementById(id) : null;
+      if (!target) return;
+      event.preventDefault();
+      window.history.pushState(null, '', destination.hash);
+      target.scrollIntoView({behavior: 'smooth', block: 'start'});
+    });
+  });
   let panel = null;
   let trigger = null;
   const backdrop = document.getElementById('panelBackdrop');

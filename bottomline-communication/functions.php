@@ -31,23 +31,40 @@ function bl_value( $name, $default, $post_id = null ) {
     return is_scalar( $value ) ? (string) $value : '';
 }
 
-/** Resolve original links through WordPress, including subdirectory installations. */
+/** Resolve internal slugs through WordPress, including subdirectory installations. */
 function bl_url( $url ) {
+    $url = trim( (string) $url );
     if ( '' === $url ) return '';
-    if ( preg_match( '~^(?:https?:|mailto:|tel:|#|//)~i', $url ) ) return $url;
-    if ( preg_match( '~^(index|about|projects|clients|contact)\.html(#[^\s]*)?$~', $url, $match ) ) {
-        $slug = 'index' === $match[1] ? '' : $match[1];
-        $page = $slug ? get_page_by_path( $slug ) : null;
-        return ( $page ? get_permalink( $page ) : home_url( '/' . ( $slug ? $slug . '/' : '' ) ) ) . ( $match[2] ?? '' );
+    if ( preg_match( '~^(?:mailto:|tel:|#)~i', $url ) ) return $url;
+    $parts = wp_parse_url( $url );
+    if ( false === $parts ) return '';
+    $home = wp_parse_url( home_url( '/' ) );
+    if ( ! empty( $parts['host'] ) && 0 !== strcasecmp( $parts['host'], $home['host'] ?? '' ) ) return $url;
+    $slug = trim( $parts['path'] ?? '', '/' );
+    $home_path = trim( $home['path'] ?? '', '/' );
+    if ( $home_path && ( $slug === $home_path || 0 === strpos( $slug, $home_path . '/' ) ) ) {
+        $slug = trim( substr( $slug, strlen( $home_path ) ), '/' );
     }
-    if ( '/' === substr( $url, 0, 1 ) ) return home_url( $url );
-    return get_theme_file_uri( 'assets/' . ltrim( $url, '/' ) );
+    $query = empty( $parts['query'] ) ? '' : '?' . $parts['query'];
+    $fragment = empty( $parts['fragment'] ) ? '' : '#' . $parts['fragment'];
+    $extension = strtolower( pathinfo( $slug, PATHINFO_EXTENSION ) );
+    if ( 'html' === $extension ) {
+        $slug = substr( $slug, 0, -( strlen( $extension ) + 1 ) );
+        if ( 'index' === basename( $slug ) ) $slug = trim( dirname( $slug ), './' );
+    }
+    if ( '' === $slug ) return home_url( '/' ) . $query . $fragment;
+    $page = get_page_by_path( $slug );
+    return ( $page ? get_permalink( $page ) : home_url( '/' . trailingslashit( $slug ) ) ) . $query . $fragment;
 }
+add_filter( 'nav_menu_link_attributes', function ( $attributes ) {
+    if ( ! empty( $attributes['href'] ) ) $attributes['href'] = bl_url( $attributes['href'] );
+    return $attributes;
+} );
 function bl_page_kind() {
     if ( is_front_page() ) return 'home';
     $template = get_page_template_slug();
     foreach ( array( 'home', 'about', 'projects', 'clients', 'contact' ) as $kind ) {
-        if ( 'template-' . $kind . '.php' === $template ) return $kind;
+        if ( 'templates/template-' . $kind . '.php' === $template ) return $kind;
     }
     return 'about';
 }
@@ -79,30 +96,11 @@ add_filter( 'body_class', function ( $classes ) {
     return $classes;
 } );
 add_action( 'wp_enqueue_scripts', function () {
-    $kind = bl_page_kind();
-    wp_enqueue_style( 'bl-theme', get_stylesheet_uri(), array(), bl_asset_version( 'style.css' ) );
-    if ( 'contact' === $kind ) {
-        wp_enqueue_script( 'bl-jquery-validation', get_theme_file_uri( 'assets/js/jquery.validate.min.js' ), array( 'jquery' ), '1.21.0', true );
-        wp_enqueue_script( 'bl-contact-validation', get_theme_file_uri( 'assets/js/contact-validation.js' ), array( 'bl-jquery-validation' ), bl_asset_version( 'assets/js/contact-validation.js' ), true );
-    }
-    wp_enqueue_script( 'bl-page', get_theme_file_uri( 'assets/js/' . $kind . '.js' ), array(), bl_asset_version( 'assets/js/' . $kind . '.js' ), true );
-    wp_enqueue_script( 'bl-interactions', get_theme_file_uri( 'assets/js/interactions.js' ), array( 'bl-page' ), bl_asset_version( 'assets/js/interactions.js' ), true );
+    wp_enqueue_style( 'bl-theme', get_theme_file_uri( 'assets/css/mt-style.css' ), array(), bl_asset_version( 'assets/css/mt-style.css' ) );
+    wp_enqueue_script( 'bl-theme', get_theme_file_uri( 'assets/js/mt-script.js' ), array( 'jquery' ), bl_asset_version( 'assets/js/mt-script.js' ), true );
 } );
 add_action( 'admin_notices', function () {
     if ( current_user_can( 'activate_plugins' ) && ! function_exists( 'acf_add_options_page' ) ) {
         echo '<div class="notice notice-warning"><p>BottomLine: activate your licensed ACF Pro plugin to edit the text fields and global settings. The original PHP content remains available.</p></div>';
-    }
-} );
-
-// Preserve incoming links from the static site using native WordPress redirects.
-add_action( 'template_redirect', function () {
-    if ( ! in_array( $_SERVER['REQUEST_METHOD'] ?? 'GET', array( 'GET', 'HEAD' ), true ) ) return;
-    $request_path = wp_parse_url( wp_unslash( $_SERVER['REQUEST_URI'] ?? '' ), PHP_URL_PATH );
-    $base = trailingslashit( wp_parse_url( home_url( '/' ), PHP_URL_PATH ) ?: '/' );
-    foreach ( array( 'index', 'about', 'projects', 'clients', 'contact' ) as $slug ) {
-        if ( $request_path === $base . $slug . '.html' ) {
-            wp_safe_redirect( bl_url( $slug . '.html' ), 301 );
-            exit;
-        }
     }
 } );

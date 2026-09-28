@@ -3,7 +3,7 @@
 defined( 'ABSPATH' ) || exit;
 function bl_migrate_about_story() {
     if ( get_option( 'bl_about_story_editor_migrated' ) ) return;
-    $pages = get_posts( array( 'post_type' => 'page', 'post_status' => 'any', 'numberposts' => -1, 'meta_key' => '_wp_page_template', 'meta_value' => 'template-about.php' ) );
+    $pages = get_posts( array( 'post_type' => 'page', 'post_status' => 'any', 'numberposts' => -1, 'meta_key' => '_wp_page_template', 'meta_value' => 'templates/template-about.php' ) );
     if ( ! $pages ) return;
     foreach ( $pages as $page ) {
         if ( '' !== trim( $page->post_content ) ) continue;
@@ -28,7 +28,7 @@ add_action( 'init', 'bl_migrate_about_story', 25 );
 /** Consolidate the Presence title without replacing existing editor changes. */
 function bl_migrate_presence_heading() {
     if ( get_option( 'bl_presence_heading_migrated' ) ) return;
-    $pages = get_posts( array( 'post_type' => 'page', 'post_status' => 'any', 'numberposts' => -1, 'meta_key' => '_wp_page_template', 'meta_value' => 'template-about.php' ) );
+    $pages = get_posts( array( 'post_type' => 'page', 'post_status' => 'any', 'numberposts' => -1, 'meta_key' => '_wp_page_template', 'meta_value' => 'templates/template-about.php' ) );
     if ( ! $pages ) return;
     foreach ( $pages as $page ) {
         if ( metadata_exists( 'post', $page->ID, 'bl_presence_heading' ) ) continue;

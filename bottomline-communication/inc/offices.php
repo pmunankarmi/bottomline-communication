@@ -15,9 +15,9 @@ function bl_office_rows( $page_id ) {
 }
 function bl_migrate_offices() {
     if ( get_option( 'bl_offices_migrated' ) ) return;
-    $pages = get_posts( array( 'post_type' => 'page', 'post_status' => 'any', 'numberposts' => -1, 'meta_key' => '_wp_page_template', 'meta_value' => 'template-about.php' ) );
+    $pages = get_posts( array( 'post_type' => 'page', 'post_status' => 'any', 'numberposts' => -1, 'meta_key' => '_wp_page_template', 'meta_value' => 'templates/template-about.php' ) );
     if ( ! $pages ) return;
-    $legacy = require __DIR__ . '/legacy-fields.php';
+    $legacy = require dirname( __DIR__ ) . '/data/legacy-fields.php';
     foreach ( $pages as $page ) {
         if ( metadata_exists( 'post', $page->ID, 'bl_offices' ) ) continue;
         $value = function ( $number ) use ( $page, $legacy ) {

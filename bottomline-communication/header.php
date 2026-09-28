@@ -23,7 +23,7 @@
   wp_nav_menu( array( 'theme_location' => $menu_location, 'container' => false, 'menu_class' => 'nav-links', 'depth' => 1, 'fallback_cb' => false ) );
   ?>
   <?php if ( $home_header ) : ?><div class="nav-actions"><?php endif; ?>
-    <a href="<?php echo esc_url( 'contact' === bl_page_kind() ? '#form' : bl_url( 'contact.html' ) ); ?>" class="nav-cta"><?php echo 'contact' === bl_page_kind() ? 'Jump to form ↓' : 'Start a project →'; ?></a>
+    <a href="<?php echo esc_url( 'contact' === bl_page_kind() ? '#form' : bl_url( 'contact' ) ); ?>" class="nav-cta"><?php echo 'contact' === bl_page_kind() ? 'Jump to form ↓' : 'Start a project →'; ?></a>
   <?php if ( $home_header ) : ?></div><?php endif; ?>
   <button class="menu-btn" aria-label="menu">☰</button>
 </nav>

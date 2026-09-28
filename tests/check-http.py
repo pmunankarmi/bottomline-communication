@@ -12,8 +12,8 @@ for path in ['/?test=1','/about/','/projects/','/clients/','/contact/']:
     status,body,url=request(path)
     assert status==200 and 'Fatal error' not in body,path
     assert body.count('<nav id="nav">')==1 and body.count('<footer>')==1,path
+    assert not re.search(r'href=["\'][^"\']+\.html(?:[#?"\'])',body,re.I),path
     print('PASS',path)
-assert request('/projects.html')[2]==base+'/projects/'
 html=request('/contact/')[1]
 nonce=re.search(r'name="bl_nonce" value="([^"]+)"',html)[1]
 def post(**overrides):

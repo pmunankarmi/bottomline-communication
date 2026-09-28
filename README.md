@@ -29,16 +29,18 @@ Global settings are grouped into **Branding, Contact, Offices, Social Media, Foo
 
 - `header.php`: document head, shared logo and native WordPress navigation.
 - `footer.php`: shared footer and floating contact links.
-- `template-home.php`: the entire homepage layout and PHP content loops, directly in this file.
-- `front-page.php`: WordPress's front-page entry point; loads `template-home.php` once.
-- `template-about.php`, `template-projects.php`, `template-clients.php`, `template-contact.php`: each page's complete layout.
+- `templates/template-home.php`: the entire homepage layout and PHP content loops, directly in this file.
+- `templates/template-about.php`, `templates/template-projects.php`, `templates/template-clients.php`, `templates/template-contact.php`: each page's complete layout.
+- `template-parts/content-page.php`: the reusable standard page content part.
+- `inc/`: function modules and WordPress hooks only. Seed content arrays live in `data/`.
 - `inc/content-types.php`: Services, Work, Clients, taxonomies and their ACF fields.
 - `inc/acf-fields.php` and `inc/section-fields.php`: page labels, section editors and repeaters.
 - `inc/global-settings.php` and `inc/logo.php`: global settings and logo synchronization.
 - `inc/media.php`: Media Library URL resolution and migration from earlier theme asset paths.
 - `inc/svg.php`: administrator-only SVG upload support with active-content checks.
 - `inc/contact.php` and `inc/submissions.php`: form handling, private storage and CSV export.
-- `inc/default-content.php`, `inc/default-clients.php`, `inc/migrate.php`, `inc/legacy-fields.php`: one-time original-content import and preservation of previous field edits.
+- `data/default-content.php`, `data/default-clients.php`, `data/legacy-fields.php`: seed content used by the one-time import.
+- `inc/migrate.php`: WordPress import functions that preserve previous field edits.
 - `screenshot.png`: the actual homepage screenshot for Appearance → Themes.
 
 There are no `content-home.php`, navigation template parts or nested template-part chains. Assets use native WordPress enqueue functions. Content remains in PHP and WordPress posts/meta rather than JavaScript datasets or JSON files.
@@ -54,9 +56,9 @@ There are no `content-home.php`, navigation template parts or nested template-pa
 
 The form uses bundled **jQuery Validation** and independent server-side checks. Valid briefs are saved privately before the email notification is attempted. A failed notification remains visible in Form Submissions, and the visitor receives a receipt because the brief is stored. CSV export requires an administrator login and a valid nonce, and neutralizes spreadsheet formulas.
 
-ACF Pro is required for the gallery editing interface and options page. Front-end gallery rendering uses stored attachment IDs and continues to work if ACF is temporarily inactive. Administrators can upload validated SVG files through the normal Media Library; other roles cannot upload SVG. Saved admin values override PHP fallback text. Old `.html` URLs redirect through WordPress; remove or redirect any physical static HTML files on the host so requests reach WordPress.
+ACF Pro is required for the gallery editing interface and options page. Front-end gallery rendering uses stored attachment IDs and continues to work if ACF is temporarily inactive. Administrators can upload validated SVG files through the normal Media Library; other roles cannot upload SVG. Saved admin values override PHP fallback text. Internal links use WordPress page permalinks and assigned WordPress menus.
 
-The distributable theme contains one public stylesheet, `style.css`. Page-specific source files live in the repository-only `css-source` directory and are compiled with `php tools/build-css.php`. Content images and logos are not stored in the theme directory. `screenshot.png` remains because WordPress uses it as the required Appearance → Themes preview.
+The Home page uses the assigned `templates/template-home.php` page template directly; there is no duplicate `front-page.php`. The mandatory `style.css` contains only the WordPress theme header. All frontend styles compile into `assets/css/mt-style.css`, and all theme JavaScript compiles into `assets/js/mt-script.js`. Repository-only sources live in `css-source` and `js-source`; rebuild both files with `php tools/build-assets.php`. Content images and logos are not stored in the theme directory. `screenshot.png` remains because WordPress uses it as the required Appearance → Themes preview.
 
 ## Automatic deployment after Git pushes
 
@@ -86,9 +88,9 @@ Live deployment has not been enabled or tested: hosting details and secrets were
 ## Validation
 
 ```sh
-php tools/build-css.php
+php tools/build-assets.php
 find bottomline-communication -name '*.php' -exec php -l {} \;
-for file in bottomline-communication/assets/js/*.js; do node --check "$file"; done
+node --check bottomline-communication/assets/js/mt-script.js
 python3 tests/check-theme.py
 BL_WP_PATH=/path/to/disposable/wordpress php tests/wordpress.php
 BL_WP_PATH=/path/to/disposable/wordpress python3 tests/check-http.py
@@ -124,4 +126,4 @@ Existing values migrate once into the consolidated fields. Later editor changes,
 
 ## Navigation menus
 
-On the first request after installing 2.1.4, the theme creates **BottomLine — Homepage** and **BottomLine — Inner pages** and assigns them to **Homepage navigation** and **Inner-page navigation**. Existing assignments are preserved. Edit links and order under Appearance → Menus; use Manage Locations to change assignments. Later requests preserve edits, deletions and intentionally unassigned locations. The header renders `wp_nav_menu()` with no hardcoded link fallback.
+On the first request after installing 2.1.4, the theme creates **BottomLine — Homepage** and **BottomLine — Inner pages** and assigns them to **Homepage navigation** and **Inner-page navigation**. Existing assignments are preserved. Version 2.2.1 repairs malformed URLs in those two theme-created menus through the WordPress menu API. Edit links and order under Appearance → Menus; use Manage Locations to change assignments. Later requests preserve edits, deletions and intentionally unassigned locations. The header renders `wp_nav_menu()` with no hardcoded link fallback.

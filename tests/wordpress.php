@@ -16,6 +16,9 @@ $categories = get_terms( array( 'taxonomy' => 'bl_work_category', 'hide_empty' =
 check( $categories === array( 'Branding', 'Events', 'Digital', 'Campaign', 'Activation', 'Retail' ), 'All six native Work categories' );
 check( ! use_block_editor_for_post_type( 'page' ) && ! use_block_editor_for_post_type( 'bl_work' ), 'Gutenberg disabled' );
 $home = get_page_by_path( 'home' );
+foreach ( array( 'home', 'about', 'projects', 'clients', 'contact' ) as $template_slug ) {
+    check( bl_page_template( $template_slug ) === get_page_template_slug( get_page_by_path( $template_slug )->ID ), 'Standard template folder assignment: ' . $template_slug );
+}
 $key = 'bl_home_011'; $existed = metadata_exists( 'post', $home->ID, $key ); $before = get_post_meta( $home->ID, $key, true );
 update_field( 'field_' . $key, 'Admin test value', $home->ID );
 check( bl_value( $key, 'fallback', $home->ID ) === 'Admin test value', 'ACF page editing works' );
@@ -84,9 +87,10 @@ foreach ( array( 'home', 'about', 'projects', 'clients', 'contact' ) as $slug ) 
     check( $xp->query( '//footer' )->length === 1, "$slug: one shared footer" );
     check( $xp->query( '//footer//*[contains(concat(" ", normalize-space(@class), " "), " foot-socials ")]//a[@aria-label="Instagram"]' )->length === 1, "$slug: configured social icon in shared footer" );
     check( $xp->query( '//h1' )->length === 1, "$slug: server-rendered page title" );
+    check( $xp->query( '//a[contains(translate(@href, "HTML", "html"), ".html")]' )->length === 0, "$slug: no static document links" );
     if ( 'projects' === $slug ) check( $xp->query( '//aside' )->length === 24 && $xp->query( '//*[@data-project]' )->length === 24, 'All cards and panels rendered by PHP' );
     if ( 'clients' === $slug ) check( $xp->query( '//div[@class="sector reveal"]' )->length === 10, 'Client sectors rendered from posts' );
-    file_put_contents( sys_get_temp_dir() . '/bl-rendered-' . $slug . '.html', $html );
+    file_put_contents( sys_get_temp_dir() . '/bl-rendered-' . $slug . '.txt', $html );
 }
 if ( false === $social_before['bl_social_instagram'] ) delete_option( 'options_bl_social_instagram' );
 else update_option( 'options_bl_social_instagram', $social_before['bl_social_instagram'] );
@@ -96,7 +100,7 @@ $counts = array_map( function ( $type ) { return count( bl_content_posts( $type 
 bl_import_content();
 check( $counts === array_map( function ( $type ) { return count( bl_content_posts( $type ) ); }, array( 'bl_service', 'bl_work', 'bl_client' ) ), 'Content import is idempotent' );
 echo "All WordPress integration checks passed.\n";
-foreach ( glob( get_template_directory() . '/*.php' ) as $file ) {
+foreach ( array_merge( glob( get_template_directory() . '/*.php' ), glob( get_template_directory() . '/templates/*.php' ) ) as $file ) {
     preg_match_all( "/bl_value\\(\\s*'([^']+)'/", file_get_contents( $file ), $matches );
     foreach ( $matches[1] as $name ) check( (bool) acf_get_field( 'field_' . $name ), 'Registered template field: ' . $name );
 }

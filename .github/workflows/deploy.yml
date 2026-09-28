@@ -15,8 +15,10 @@ jobs:
       - uses: actions/checkout@v4
       - name: Validate theme
         run: |
+          php tools/build-assets.php
+          git diff --exit-code -- bottomline-communication/style.css bottomline-communication/assets/css/mt-style.css bottomline-communication/assets/js/mt-script.js
           find bottomline-communication -name '*.php' -print0 | xargs -0 -n1 php -l
-          for file in bottomline-communication/assets/js/*.js; do node --check "$file"; done
+          node --check bottomline-communication/assets/js/mt-script.js
           python3 tests/check-theme.py
   release:
     if: github.event_name == 'push'

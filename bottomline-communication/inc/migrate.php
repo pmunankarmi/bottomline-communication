@@ -3,7 +3,7 @@
 defined( 'ABSPATH' ) || exit;
 function bl_legacy_value( $prefix, $default, $page_id = 0 ) {
     static $fields;
-    if ( null === $fields ) $fields = require __DIR__ . '/legacy-fields.php';
+    if ( null === $fields ) $fields = require dirname( __DIR__ ) . '/data/legacy-fields.php';
     $result = $default;
     foreach ( $fields as $name => $original ) {
         if ( strpos( $name, $prefix ) !== 0 || $original !== $default ) continue;
@@ -21,11 +21,11 @@ function bl_seed_meta( $id, $fields ) {
 }
 function bl_import_content_run() {
     if ( '2.2' === get_option( 'bl_content_version' ) ) return;
-    $defaults = require __DIR__ . '/default-content.php';
+    $defaults = require dirname( __DIR__ ) . '/data/default-content.php';
     $home = get_page_by_path( 'home' );
     $home_id = (int) get_option( 'page_on_front' ) ?: ( $home ? $home->ID : 0 );
     $clients = get_page_by_path( 'clients' );
-    $legacy = require __DIR__ . '/legacy-fields.php';
+    $legacy = require dirname( __DIR__ ) . '/data/legacy-fields.php';
     foreach ( array( 'branding' => 'Branding', 'events' => 'Events', 'digital' => 'Digital', 'campaign' => 'Campaign', 'activation' => 'Activation', 'retail' => 'Retail' ) as $slug => $name ) {
         if ( ! term_exists( $slug, 'bl_work_category' ) ) wp_insert_term( $name, 'bl_work_category', array( 'slug' => $slug ) );
     }
@@ -111,7 +111,7 @@ add_action( 'init', 'bl_import_content', 20 );
 
 function bl_import_clients() {
     require_once ABSPATH . 'wp-admin/includes/image.php';
-    $groups = require __DIR__ . '/default-clients.php';
+    $groups = require dirname( __DIR__ ) . '/data/default-clients.php';
     foreach ( $groups as $order => $group ) {
         $slug = sanitize_title( $group['title'] );
         $existing = get_page_by_path( $slug, OBJECT, 'bl_client' );

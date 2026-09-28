@@ -41,7 +41,7 @@ function bl_handle_brief() {
     update_post_meta( $submission_id, '_bl_delivery', $sent ? 'Accepted by mail transport' : 'Failed — brief saved' );
     $token = strtolower( wp_generate_password( 32, false, false ) );
     set_transient( 'bl_brief_' . $token, 'sent', 10 * MINUTE_IN_SECONDS );
-    wp_safe_redirect( add_query_arg( 'brief', $token, bl_url( 'contact.html' ) ) . '#form', 303 );
+    wp_safe_redirect( add_query_arg( 'brief', $token, bl_url( 'contact' ) ) . '#form', 303 );
     exit;
 }
 add_action( 'template_redirect', function () {

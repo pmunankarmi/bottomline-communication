@@ -1,4 +1,5 @@
 [hidden]{display:none!important}
+[id]{scroll-margin-top:86px}
 .admin-bar #nav{top:32px}
 .project-panel[aria-hidden="true"]{visibility:hidden}
 .project-panel.open{visibility:visible}
