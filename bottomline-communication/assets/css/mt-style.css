@@ -1519,23 +1519,24 @@ body.bl-page-contact .budget-pill{
 body.bl-page-contact .budget-pill:hover{border-color:var(--purple-800);color:var(--purple-800)}
 body.bl-page-contact .budget-pill.active{background:var(--purple-800);color:#fff;border-color:var(--purple-800)}
 body.bl-page-contact .service-checks{/* layout via Bootstrap row/col */}
-body.bl-page-contact .check-pill{
+body.bl-page-contact .field .check-pill{
     display:flex;align-items:center;gap:10px;
     padding:12px 16px;border:1.5px solid var(--line);border-radius:30px;
     cursor:pointer;transition:all .2s;font-size:.9rem;
+    color:var(--ink);font-weight:500;letter-spacing:normal;text-transform:none;margin-bottom:0;
   }
-body.bl-page-contact .check-pill:hover{border-color:var(--purple-800)}
-body.bl-page-contact .check-pill input{display:none}
-body.bl-page-contact .check-pill .box{
-    width:18px;height:18px;border:1.5px solid var(--line);border-radius:5px;
-    display:grid;place-items:center;flex-shrink:0;transition:all .2s;
+body.bl-page-contact .field .check-pill:hover{border-color:var(--purple-800);color:var(--purple-800)}
+body.bl-page-contact .check-pill input{
+    position:absolute;width:1px;height:1px;padding:0;margin:-1px;
+    overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;
   }
-body.bl-page-contact .check-pill .box::after{
-    content:'';width:8px;height:8px;border-radius:2px;background:transparent;transition:all .2s;
+body.bl-page-contact .field .check-pill.active,body.bl-page-contact .field .check-pill:has(input:checked){
+    background:var(--purple-800);border-color:var(--purple-800);color:#fff;
   }
-body.bl-page-contact .check-pill input:checked ~ .box{border-color:var(--purple-800);background:var(--purple-800)}
-body.bl-page-contact .check-pill input:checked ~ .box::after{background:#fff}
-body.bl-page-contact .check-pill input:checked ~ span{color:var(--purple-800);font-weight:600}
+body.bl-page-contact .field .check-pill.active:hover,body.bl-page-contact .field .check-pill:has(input:checked):hover{color:#fff}
+body.bl-page-contact .field .check-pill.has-error{border-color:#b32d2e}
+body.bl-page-contact .check-pill:has(input:focus-visible){outline:3px solid rgba(77,207,204,.45);outline-offset:2px}
+body.bl-page-contact .check-pill .check-label{color:inherit;font-weight:inherit}
 body.bl-page-contact .form-submit{
     width:100%;padding:18px 32px;
     background:var(--purple-800);color:#fff;

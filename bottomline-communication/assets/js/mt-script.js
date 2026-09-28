@@ -227,6 +227,18 @@ if (document.body.classList.contains('bl-page-contact')) {
 jQuery(function ($) {
   const $form = $('#briefForm');
   if (!$form.length || !$.fn.validate) return;
+
+  const $services = $form.find('input[name="service[]"]');
+  const syncServicePill = function (input) {
+    $(input).closest('.check-pill').toggleClass('active', input.checked);
+  };
+
+  $services.each(function () { syncServicePill(this); });
+  $form.on('change', 'input[name="service[]"]', function () {
+    syncServicePill(this);
+    if ($form.data('validator')) $form.validate().element(this);
+  });
+
   $form.validate({
     ignore: ':hidden:not([name="service[]"])',
     rules: {
@@ -241,8 +253,16 @@ jQuery(function ($) {
       if (element.attr('name') === 'service[]') error.insertAfter(element.closest('.service-checks'));
       else error.insertAfter(element);
     },
-    highlight: function (element) { $(element).attr('aria-invalid', 'true'); },
-    unhighlight: function (element) { $(element).attr('aria-invalid', 'false'); }
+    highlight: function (element) {
+      $(element).attr('aria-invalid', 'true');
+      if ($(element).attr('name') === 'service[]') $services.closest('.check-pill').addClass('has-error');
+    },
+    unhighlight: function (element) {
+      $(element).attr('aria-invalid', 'false');
+      if ($(element).attr('name') === 'service[]' && $services.filter(':checked').length) {
+        $services.attr('aria-invalid', 'false').closest('.check-pill').removeClass('has-error');
+      }
+    }
   });
 });
 

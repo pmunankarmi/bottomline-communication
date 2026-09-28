@@ -40,6 +40,10 @@ assert "wp_nav_menu(" in (root / 'header.php').read_text()
 assert 'content-home' not in php
 assert not (root / 'front-page.php').exists()
 assert not re.search(r"(?:index|about|projects|clients|contact)\.html", php, re.I), 'Static document URL remains in PHP'
+contact_template = (root / 'templates/template-contact.php').read_text()
+contact_validation = (root.parent / 'js-source/contact-validation.js').read_text()
+assert 'name="service[]"' in contact_template and '<span class="box">' not in contact_template, 'Service choices use hidden native checkboxes without visible indicators'
+assert "'service[]': { required: true }" in contact_validation and ".validate().element(this)" in contact_validation, 'jQuery Validation handles service selection'
 assert (root / 'screenshot.png').is_file()
 assert 'bl_work_category' in php and 'bl_work_scope' in php
 assert 'bl_export_submissions' in php

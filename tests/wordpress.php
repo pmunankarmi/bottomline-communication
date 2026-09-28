@@ -90,6 +90,10 @@ foreach ( array( 'home', 'about', 'projects', 'clients', 'contact' ) as $slug ) 
     check( $xp->query( '//a[contains(translate(@href, "HTML", "html"), ".html")]' )->length === 0, "$slug: no static document links" );
     if ( 'projects' === $slug ) check( $xp->query( '//aside' )->length === 24 && $xp->query( '//*[@data-project]' )->length === 24, 'All cards and panels rendered by PHP' );
     if ( 'clients' === $slug ) check( $xp->query( '//div[@class="sector reveal"]' )->length === 10, 'Client sectors rendered from posts' );
+    if ( 'contact' === $slug ) {
+        check( $xp->query( '//label[contains(concat(" ", normalize-space(@class), " "), " check-pill ")]/input[@type="checkbox" and @name="service[]"]' )->length === 6, 'Contact services use native checkbox inputs' );
+        check( $xp->query( '//*[contains(concat(" ", normalize-space(@class), " "), " check-pill ")]//*[contains(concat(" ", normalize-space(@class), " "), " box ")]' )->length === 0, 'Contact services have no visible checkbox indicator' );
+    }
     file_put_contents( sys_get_temp_dir() . '/bl-rendered-' . $slug . '.txt', $html );
 }
 if ( false === $social_before['bl_social_instagram'] ) delete_option( 'options_bl_social_instagram' );

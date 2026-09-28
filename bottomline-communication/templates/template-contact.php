@@ -45,7 +45,7 @@ get_header();
             <label><?php echo esc_html( bl_copy('bl_contact_014', 'What can we help with?', get_queried_object_id()) ); ?> <span class="req"><?php echo esc_html( bl_copy('bl_contact_006', '*', get_queried_object_id()) ); ?></span></label>
             <div class="service-checks row g-2">
               <?php foreach ( bl_content_posts( 'bl_service' ) as $service ) : ?>
-              <label class="col-md-6 check-pill"><input type="checkbox" name="service[]" value="<?php echo esc_attr( $service->post_title ); ?>" data-msg-required="Please select at least one service."><span class="box"></span><span><?php echo esc_html( $service->post_title ); ?></span></label>
+              <label class="col-md-6 check-pill"><input type="checkbox" name="service[]" value="<?php echo esc_attr( $service->post_title ); ?>" data-msg-required="Please select at least one service."><span class="check-label"><?php echo esc_html( $service->post_title ); ?></span></label>
               <?php endforeach; ?>
             </div>
           </div>
