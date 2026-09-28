@@ -44,6 +44,11 @@ contact_template = (root / 'templates/template-contact.php').read_text()
 contact_validation = (root.parent / 'js-source/contact-validation.js').read_text()
 assert 'name="service[]"' in contact_template and '<span class="box">' not in contact_template, 'Service choices use hidden native checkboxes without visible indicators'
 assert "'service[]': { required: true }" in contact_validation and ".validate().element(this)" in contact_validation, 'jQuery Validation handles service selection'
+combined_css = (root / 'assets/css/mt-style.css').read_text()
+assert 'grid-template-columns:repeat(2,minmax(0,1fr));gap:10px 12px' in combined_css, 'Contact service choices have equal row and column gaps'
+assert 'grid-template-columns:repeat(4,minmax(0,1fr));gap:14px' in combined_css, 'Contact budget choices have equal gaps'
+assert 'grid-template-columns:repeat(3,minmax(0,1fr));gap:24px' in combined_css, 'Homepage service cards have equal row and column gaps'
+assert '.foot-socials a{' in combined_css and '.foot-socials svg{' in combined_css, 'Social buttons are styled globally'
 assert (root / 'screenshot.png').is_file()
 assert 'bl_work_category' in php and 'bl_work_scope' in php
 assert 'bl_export_submissions' in php
