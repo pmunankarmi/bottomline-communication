@@ -31,6 +31,7 @@ assert not list(root.glob('template-*.php')), 'Custom page templates belong in t
 assert {p.name for p in (root / 'templates').glob('*.php')} == {
     'template-home.php', 'template-about.php', 'template-projects.php', 'template-clients.php', 'template-contact.php'
 }
+assert 'basename( get_page_template_slug( $page->ID ) )' in (root / 'inc/sections.php').read_text(), 'Section migration must support templates stored in the standard templates directory'
 assert {p.name for p in (root / 'data').glob('*.php')} == {'default-content.php', 'default-clients.php', 'legacy-fields.php'}
 for inc_file in (root / 'inc').glob('*.php'):
     source = inc_file.read_text()
@@ -42,6 +43,11 @@ assert not (root / 'front-page.php').exists()
 assert not re.search(r"(?:index|about|projects|clients|contact)\.html", php, re.I), 'Static document URL remains in PHP'
 contact_template = (root / 'templates/template-contact.php').read_text()
 contact_validation = (root.parent / 'js-source/contact-validation.js').read_text()
+content_types = (root / 'inc/content-types.php').read_text()
+home_template = (root / 'templates/template-home.php').read_text()
+projects_template = (root / 'templates/template-projects.php').read_text()
+assert "'thumbnail'" in content_types and 'service_image_url' not in content_types and 'work_cover' not in content_types, 'Services and Work must use native Featured Images instead of ACF image fields'
+assert 'get_the_post_thumbnail_url' in home_template and 'get_the_post_thumbnail_url' in projects_template and 'bl_media_url' not in home_template + projects_template, 'Frontend cards must render native Featured Images'
 assert 'name="service[]"' in contact_template and '<span class="box">' not in contact_template, 'Service choices use hidden native checkboxes without visible indicators'
 assert "'service[]': { required: true }" in contact_validation and ".validate().element(this)" in contact_validation, 'jQuery Validation handles service selection'
 combined_css = (root / 'assets/css/mt-style.css').read_text()

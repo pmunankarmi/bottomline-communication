@@ -10,8 +10,8 @@ A classic WordPress theme preserving the supplied website's design. Gutenberg is
 | **Appearance → Customize → Site Identity** | The same logo, synced with the global Logo image field |
 | **Appearance → Menus** | Homepage and inner-page navigation |
 | **Pages** | Page headings, introductory text, calls to action and homepage statistics |
-| **Services** | Each service's title, excerpt, image URL, label and disciplines |
-| **Work** | Each project's title, main description, excerpt, gallery and homepage display settings |
+| **Services** | Each service's title, excerpt, Featured Image, label and disciplines |
+| **Work** | Each project's title, main description, excerpt, Featured Image, gallery and homepage display settings |
 | **Work → Work Categories** | Branding, Events, Digital, Campaign, Activation and Retail; these drive the project filters |
 | **Work → Scope of Work** | Reusable tags displayed in project detail panels |
 | **Clients** | One post per sector, such as Hospitality or Retail & Fashion, with an ACF Pro logo gallery |
@@ -21,7 +21,7 @@ Use **ACF Pro galleries** to add/remove images and drag to reorder. Other custom
 
 For a client sector, set **Display on** to `clients`, `home` or `both`. The original homepage logo selection is a separate **Homepage logos** post. The source includes some clients represented by text instead of images; these remain in **Clients without logo images**, using `position: name` entries separated by `|`. Replace those entries with gallery images whenever their actual logos are available.
 
-For homepage Work cards, enter a positive **Homepage order**; leave it blank to omit the project. Use `wide` for a wide card. Native **Order** controls Services, Work listing and Clients sector ordering. Work homepage title/summary overrides are optional; the normal title and excerpt are used when blank. The category label preserves the source's display wording, while Work Categories controls filtering.
+For homepage Work cards, enter a positive **Homepage order**; leave it blank to omit the project. Use `wide` for a wide card. Set the card and detail-panel cover through WordPress's native **Featured Image** box. Services use the same native Featured Image box for their card artwork. Native **Order** controls Services, Work listing and Clients sector ordering. Work homepage title/summary overrides are optional; the normal title and excerpt are used when blank. The category label preserves the source's display wording, while Work Categories controls filtering.
 
 Global settings are grouped into **Branding, Contact, Offices, Social Media, Footer, and Form Delivery** tabs. The **Branding → Logo** image picker uploads or selects a Media Library image and shares WordPress's native `custom_logo` attachment. Changing or clearing either setting updates the other. Social icons use the shared footer on every page, and each icon is omitted when its URL is empty.
 
@@ -36,7 +36,7 @@ Global settings are grouped into **Branding, Contact, Offices, Social Media, Foo
 - `inc/content-types.php`: Services, Work, Clients, taxonomies and their ACF fields.
 - `inc/acf-fields.php` and `inc/section-fields.php`: page labels, section editors and repeaters.
 - `inc/global-settings.php` and `inc/logo.php`: global settings and logo synchronization.
-- `inc/media.php`: Media Library URL resolution and migration from earlier theme asset paths.
+- `inc/media.php`: Media Library import support and migration from legacy ACF images to native Featured Images.
 - `inc/svg.php`: administrator-only SVG upload support with active-content checks.
 - `inc/contact.php` and `inc/submissions.php`: form handling, private storage and CSV export.
 - `data/default-content.php`, `data/default-clients.php`, `data/legacy-fields.php`: seed content used by the one-time import.
@@ -50,7 +50,7 @@ There are no `content-home.php`, navigation template parts or nested template-pa
 1. Install and activate your licensed **ACF Pro** plugin; it is not bundled.
 2. Upload the theme ZIP through **Appearance → Themes**, or deploy the `bottomline-communication` folder into `wp-content/themes/`.
 3. Activate the theme. Missing standard pages and page-template assignments are created; existing page content and existing homepage settings are not overwritten.
-4. On the first request, the theme imports the original 6 Services, 24 Work posts, 10 client sectors, Homepage logos, categories and scope tags. It downloads the matching `bottomline-media.zip` release pack once and creates normal WordPress Media Library attachments in `wp-content/uploads`; the uploads directory and WordPress temporary directory must be writable. A failed download remains pending and retries on a later request. Subsequent deployments do not overwrite these posts, recreate deliberately deleted content or reorder editor changes. Previous text-field edits are retained where they map to the new fields.
+4. On the first request, the theme imports the original 6 Services, 24 Work posts, 10 client sectors, Homepage logos, categories and scope tags. Service and Work cover images are assigned as native Featured Images. It downloads the matching `bottomline-media.zip` release pack once and creates normal WordPress Media Library attachments in `wp-content/uploads`; the uploads directory and WordPress temporary directory must be writable. A failed download remains pending and retries on a later request. Subsequent deployments do not overwrite these posts, recreate deliberately deleted content or reorder editor changes. Previous text-field edits are retained where they map to the new fields.
 5. If matching pages already existed, assign their matching **BottomLine** templates. Set the intended homepage in **Settings → Reading**.
 6. Set the notification recipient under **BottomLine** and configure the host's WordPress mail/SMTP service.
 

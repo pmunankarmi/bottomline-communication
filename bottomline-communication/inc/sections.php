@@ -37,7 +37,8 @@ function bl_migrate_sections() {
     if ( ! $pages ) return;
     $migrated = array();
     foreach ( $pages as $page ) {
-        $kind = str_replace( array( 'template-', '.php' ), '', get_page_template_slug( $page->ID ) );
+        $template = basename( get_page_template_slug( $page->ID ) );
+        $kind = str_replace( array( 'template-', '.php' ), '', $template );
         if ( (int) get_option( 'page_on_front' ) === $page->ID ) $kind = 'home';
         if ( ! in_array( $kind, array( 'home', 'about', 'projects', 'clients', 'contact' ), true ) ) continue;
         $migrated[$kind] = true;

@@ -6,7 +6,7 @@ add_action( 'init', function () {
         register_post_type( $type, array(
             'labels' => array( 'name' => $labels[0], 'singular_name' => $labels[1], 'add_new_item' => 'Add ' . $labels[1], 'edit_item' => 'Edit ' . $labels[1] ),
             'public' => false, 'show_ui' => true, 'show_in_menu' => true,
-            'menu_icon' => $labels[2], 'supports' => 'bl_client' === $type ? array( 'title', 'page-attributes' ) : ( 'bl_service' === $type ? array( 'title', 'excerpt', 'page-attributes' ) : array( 'title', 'editor', 'excerpt', 'page-attributes' ) ),
+            'menu_icon' => $labels[2], 'supports' => 'bl_client' === $type ? array( 'title', 'page-attributes' ) : ( 'bl_service' === $type ? array( 'title', 'excerpt', 'thumbnail', 'page-attributes' ) : array( 'title', 'editor', 'excerpt', 'thumbnail', 'page-attributes' ) ),
             'rewrite' => false, 'show_in_rest' => false,
         ) );
     }
@@ -44,12 +44,10 @@ add_action( 'acf/init', function () {
         'bl_client' => array( 'client_text_logos' => array( 'Clients without logo images', 'Keep text-only clients using position: name, separated by |. Example: 2: Centrepoint | 4: Femi 9. Remove an entry after adding its logo to the gallery.' ), 'client_gallery' => array( 'Client logos', 'Add logo images and drag to reorder.' ), 'client_placement' => array( 'Display on', 'Enter clients, home, or both.' ) ),
         'bl_service' => array(
             'service_tag' => array( 'Image label', 'Short label displayed over the service image.' ),
-            'service_image_url' => array( 'Image', 'Select an image from the WordPress Media Library.' ),
             'service_disciplines' => array( 'Disciplines', 'Separate items with |, for example Strategy | Digital | Social.' ),
         ),
         'bl_work' => array(
             'work_category' => array( 'Category label', 'For example Branding · Campaign.' ),
-            'work_cover' => array( 'Cover image', 'Select an image from the WordPress Media Library.' ),
             'work_year' => array( 'Year', '' ), 'work_sector' => array( 'Sector', '' ), 'work_location' => array( 'Location', '' ),
             'work_gallery' => array( 'Project gallery', 'Add images and drag to reorder.' ),
             'work_home_order' => array( 'Homepage order', 'Enter a positive number to feature this work on the homepage. Leave blank to hide it there.' ),
@@ -64,8 +62,9 @@ add_action( 'acf/init', function () {
         $fields = array();
         foreach ( $definitions as $name => $details ) {
             $gallery = in_array( $name, array( 'client_gallery', 'work_gallery' ), true );
-            $image = in_array( $name, array( 'service_image_url', 'work_cover' ), true );
-            $fields[] = array( 'key' => 'field_' . $name, 'name' => $name, 'label' => $details[0], 'instructions' => $details[1], 'type' => $gallery ? 'gallery' : ( $image ? 'image' : 'text' ), 'return_format' => 'id', 'preview_size' => 'thumbnail', 'default_value' => 'client_placement' === $name ? 'clients' : '' );
+            $field = array( 'key' => 'field_' . $name, 'name' => $name, 'label' => $details[0], 'instructions' => $details[1], 'type' => $gallery ? 'gallery' : 'text', 'default_value' => 'client_placement' === $name ? 'clients' : '' );
+            if ( $gallery ) $field += array( 'return_format' => 'id', 'preview_size' => 'thumbnail' );
+            $fields[] = $field;
         }
         acf_add_local_field_group( array( 'key' => 'group_' . $type, 'title' => 'bl_work' === $type ? 'Work details' : ( 'bl_client' === $type ? 'Client gallery' : 'Service details' ), 'fields' => $fields, 'location' => array( array( array( 'param' => 'post_type', 'operator' => '==', 'value' => $type ) ) ) ) );
     }

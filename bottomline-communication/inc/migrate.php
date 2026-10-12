@@ -37,7 +37,8 @@ function bl_import_content_run() {
         if ( ! $image_id ) return;
         $id = wp_insert_post( array( 'post_type' => 'bl_service', 'post_status' => 'publish', 'post_name' => $slug, 'post_title' => bl_legacy_value( 'bl_home_', $service['title'], $home_id ), 'post_excerpt' => bl_legacy_value( 'bl_home_', $service['description'], $home_id ), 'menu_order' => $order ), true );
         if ( is_wp_error( $id ) ) return;
-        bl_seed_meta( $id, array( 'service_tag' => bl_legacy_value( 'bl_home_', $service['tag'], $home_id ), 'service_image_url' => $image_id, 'service_disciplines' => implode( ' | ', array_map( function ( $text ) use ( $home_id ) { return bl_legacy_value( 'bl_home_', $text, $home_id ); }, $service['disciplines'] ) ) ) );
+        bl_seed_meta( $id, array( 'service_tag' => bl_legacy_value( 'bl_home_', $service['tag'], $home_id ), 'service_disciplines' => implode( ' | ', array_map( function ( $text ) use ( $home_id ) { return bl_legacy_value( 'bl_home_', $text, $home_id ); }, $service['disciplines'] ) ) ) );
+        set_post_thumbnail( $id, $image_id );
     }
     foreach ( $defaults['work'] as $order => $work ) {
         $slug = $work['slug'];
@@ -49,7 +50,6 @@ function bl_import_content_run() {
         update_post_meta( $id, '_bl_import_pending', 1 );
         $meta = array(
             'work_category' => bl_legacy_value( $prefix, $work['cat'] ),
-            'work_cover' => 0,
             'work_gallery' => array(),
             'work_year' => bl_legacy_value( $prefix, $work['meta'][0] ?? '' ),
             'work_sector' => bl_legacy_value( $prefix, $work['meta'][1] ?? '' ),
@@ -69,8 +69,8 @@ function bl_import_content_run() {
             if ( ! $image_id ) return;
             $meta['work_gallery'][] = $image_id;
         }
-        $meta['work_cover'] = (int) $meta['work_gallery'][0];
         bl_seed_meta( $id, $meta );
+        set_post_thumbnail( $id, (int) $meta['work_gallery'][0] );
         wp_set_object_terms( $id, $work['scope'], 'bl_work_scope' );
         wp_set_object_terms( $id, $work['filters'], 'bl_work_category' );
         delete_post_meta( $id, '_bl_import_pending' );
